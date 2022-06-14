@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 console.log("Hola mundo");
 import indexRoutes from './routes/indexRoutes';
+import authRoutes from './routes/authRoutes';
 var port = process.env.PORT || 3000;
  class Server{
     public app: Application;
@@ -23,6 +24,7 @@ var port = process.env.PORT || 3000;
     routes():void{
         this.app.use("/", indexRoutes);
         this.app.use("/api/usuarios", (req, res) => {res.json({"mensaje":"LISTA DE USUARIOS"})});
+        this.app.use("/api.auth", authRoutes);
     }
     
     start():void{
