@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {indexController} from '../controllers/indexController';
+import{authController} from '../controllers/authControllers';
 
 class IndexRoutes {
     public router: Router;
@@ -14,6 +15,7 @@ class IndexRoutes {
         this.router.post('/', indexController.create);
         this.router.put('/', indexController.update);
         this.router.delete('/', indexController.delete);
+        
     }
 }
 
