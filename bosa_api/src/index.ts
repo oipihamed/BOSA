@@ -4,6 +4,7 @@ import cors from 'cors';
 console.log("Hola mundo");
 import indexRoutes from './routes/indexRoutes';
 import authRoutes from './routes/authRoutes';
+import usuarioRoutes from './routes/usuarioRoutes';
 var port = process.env.PORT || 3000;
  class Server{
     public app: Application;
@@ -25,6 +26,7 @@ var port = process.env.PORT || 3000;
         this.app.use("/", indexRoutes);
         this.app.use("/api/usuarios", (req, res) => {res.json({"mensaje":"LISTA DE USUARIOS"})});
         this.app.use("/api.auth", authRoutes);
+        this.app.use("/api/user", usuarioRoutes);
     }
     
     start():void{

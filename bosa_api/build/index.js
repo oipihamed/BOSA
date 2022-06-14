@@ -8,6 +8,8 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 console.log("Hola mundo");
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
 var port = process.env.PORT || 3000;
 class Server {
     constructor() {
@@ -25,6 +27,8 @@ class Server {
     routes() {
         this.app.use("/", indexRoutes_1.default);
         this.app.use("/api/usuarios", (req, res) => { res.json({ "mensaje": "LISTA DE USUARIOS" }); });
+        this.app.use("/api.auth", authRoutes_1.default);
+        this.app.use("/api/user", usuarioRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
