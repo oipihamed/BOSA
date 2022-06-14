@@ -30,7 +30,7 @@ class AuthController {
            } 
            for(let usuario of lstUsers){
             if (usuario.password == password) {
-                const (password, fechaRegistro, ... newUser) = usuario;
+                const {password, fechaRegistro, ... newUser} = usuario;
 
                 var token = jwt.sign(newUser, keySecret.keys.secret, { expiresIn: '1h'});
 
