@@ -6,13 +6,16 @@ import { User } from '../../interface/User';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  user: User = {
-    id: 1,
-    name: 'Omar'
-  };
+export class LoginComponent {
+  email!: string;
+  password!: string;
 
-  constructor() { }
+  constructor() {}
+
+  login() {
+    console.log(this.email);
+    console.log(this.password);
+  }
 
   ngOnInit(): void {
   }
