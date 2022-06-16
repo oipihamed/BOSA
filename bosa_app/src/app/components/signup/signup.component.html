@@ -1,1 +1,72 @@
-<p>signup works!</p>
+<!-- register.component.html -->
+<div class="row contenedorTitulo ">
+  <div class="col-3 col_Ti">
+    <h5><a class="tituloRI" href="/login">Iniciar de sesión</a></h5>
+
+
+  </div>
+  <div class="col-3 col_Ti active">
+    <h5><a class="tituloRI" href="/signup">Registro</a></h5>
+
+  </div>
+  <div class="col-6 col_Ti">
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <div class="register ">
+      <form (submit)="signUp(name,lastname,username,email,password,rPassword)" autocomplete="on" class="custom-form">
+        <div class="row m-10">
+          <div class="col-12">
+            <h5>Registro</h5>
+            <hr>
+     
+      </div>
+        <div class="col-6">
+          <input type="text" name="name" placeholder="Nombre" required="required" #name />
+        </div>
+        <div class="col-6"><input type="text" name="lastName" placeholder="Apellidos" required="required" #lastname /></div>        
+        <div class="col-12">
+        <input type="text" name="username" placeholder="Nombre de usuario" required="required" #username />
+        <input type="email" name="email" placeholder="Correo Electronico" required="required" #email />
+        <input type="password" name="password" placeholder="Contraseña" required="required" #password />
+        <input type="password" name="rPassword" placeholder="Repetir Contraseña" required="required" #rPassword />
+        <input type="text" name="street" placeholder="Calle" required="required" #street />
+        <input type="text" name="district" placeholder="Colonia" required="required" #district />
+      </div>
+      <div class="col-6">
+
+        <select name="state" placeholder="Estado" required="required" #state >
+          <option value="1">Guanajuato</option>
+          <option value="2">Queretaro</option>
+        </select>
+      </div>
+        <div class="col-6">
+
+          <input type="text" name="city" placeholder="Ciudad" required="required" #city />
+        </div>
+        <div class="col-6">
+          <input type="number" name="zipcode" placeholder="Codigo postal" required="required" #zipcode />
+        </div>
+        <div class="col-6">
+          <input type="tel" name="phone" placeholder="Telefono" required="required" #phone />
+        </div>
+        <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12">
+        <button class="bRegistrar" type="submit">Registrar</button>
+      </div>
+      <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12">
+        <a class="bCancelar" (click)="limpiarCampos()">Cancelar</a>
+      </div>
+      </div>
+      <hr>
+      </form>
+    
+
+    </div>
+  </div>
+  <div class="col-4">
+    <hr>
+    <img src="../../../assets/images/fondo_uniforme.jpg" class="imgR">
+  </div>
+</div>
