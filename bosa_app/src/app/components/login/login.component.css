@@ -36,6 +36,9 @@
     border: 0 none;
     background: #ebf5fc;
   }
+  .custom-form #rememberUser {
+    width: 10%;
+  }
   .custom-form button {
     text-transform: uppercase;
     letter-spacing: 0.15em;
