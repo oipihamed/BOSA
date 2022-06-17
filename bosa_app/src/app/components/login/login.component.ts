@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../interface/User';
 
 @Component({
@@ -7,17 +7,22 @@ import { User } from '../../interface/User';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email!: string;
-  password!: string;
-
+  @ViewChild('email') email: any; 
+  @ViewChild('password') password: any; 
   constructor() {}
 
-  login() {
+  login(email: HTMLInputElement, password: HTMLInputElement) {
     console.log(this.email);
     console.log(this.password);
+    return false;
   }
 
   ngOnInit(): void {
+  }
+
+  limpiarCampos(){
+    this.email.nativeElement.value='';
+    this.password.nativeElement.value='';
   }
 
 }
