@@ -1,0 +1,19 @@
+.img_logo{
+    width: 180px;
+    box-shadow:2px 2px 2px 2px rgb(0, 0 ,0 , 50%);
+    border-radius: 5px;
+    
+}
+
+.bCarrito {
+    padding: auto -10px;
+    letter-spacing: 0.15em;
+    border: none;
+    font-size: 0.875rem;
+    color: #ffffff;
+    font-weight: 200;
+    background-color: #606060;
+    width: 100%;
+    border-radius: 1px;
+    cursor: pointer;
+  }
