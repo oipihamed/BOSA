@@ -1,10 +1,41 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()" >
-    <input type="text" formControlName="username"/>
-    <mat-form-field>
-    <input type="password" formControlName="password"/>
-    <mat-error *ngIf="isValidField('username')">
-        {{getErrorMessage("username")}}
-    </mat-error>
-</mat-form-field>
-    <button type="submit" [disabled]="loginForm.invalid"></button>
-</form>
+<div class="row contenedorTitulo ">
+    <div class="col-3 col_Ti">
+      <h5><a class="tituloRI" href="/login">Iniciar de sesión</a></h5>
+  
+  
+    </div>
+    <div class="col-3 col_Ti active">
+      <h5><a class="tituloRI" href="/signup">Registro</a></h5>
+  
+    </div>
+    <div class="col-6 col_Ti">
+  
+    </div>
+</div>
+
+<div class="login-form">
+    <mat-card>
+        <mat-card-content>
+            <h1>Inicio de Sesion</h1>
+            <form [formGroup] = "loginForm" (ngSubmit)="onLogin()">
+                <mat-form-field class="full-width" apperance="outline">
+                    <mat-label>Usuario</mat-label>
+                    <input type="text" formControlName="username" matInput autocomplete="new-password">
+                    <mat-error *ngIf="isValidField('username')">
+                        {{ getErrorMessage('username') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width" apperance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input type="password" formControlName="password" matInput  autocomplete="new-password">
+                    <mat-error *ngIf="isValidField('password')">
+                        {{ getErrorMessage('password') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <button type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Acceder</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

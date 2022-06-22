@@ -15,12 +15,17 @@ loginForm=this.fb.group({
 
   ngOnInit(): void {
   }
+
 onLogin(){
   //Se verifica que el formulario sea correcto
   if(this.loginForm.invalid)return;  
   //Obtener los datos del formulario
   const form=this.loginForm.value;
   console.log(form);
+}
+
+limpiarCampos(){
+  var form=this.loginForm.value;
 }
 
 getErrorMessage(field:string){
