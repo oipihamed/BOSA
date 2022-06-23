@@ -34,7 +34,13 @@
                     </mat-error>
                 </mat-form-field>
 
-                <button type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Acceder</button>
+                <div>
+                    <a class="accountRecovery" href="./accountRecovery">
+                        <p class="accountRecovery" style="color: blue;">¿Tienes problemas para iniciar sesión?</p>
+                    </a>
+                </div>
+
+                <button type="submit" mat-raised-button color="warm" [disabled]="loginForm.invalid">Acceder</button>
             </form>
         </mat-card-content>
     </mat-card>

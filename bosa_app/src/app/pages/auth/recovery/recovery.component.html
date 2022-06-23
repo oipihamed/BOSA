@@ -1,0 +1,34 @@
+<div class="row contenedorTitulo ">
+  <div class="col-3 col_Ti">
+    <h5><a class="tituloRI" href="/accountRecovery">Recuperar cuenta</a></h5>
+
+  </div>
+  <div class="col-6 col_Ti">
+
+  </div>
+</div>
+
+<mat-card class="recovery-card">
+    <mat-card-subtitle>Volviendo a tu cuenta de Bosa</mat-card-subtitle>
+    <mat-card-title>Recuperar Contraseña</mat-card-title>
+    <mat-card-content>
+      <p>Danos más detalles sobre tu cuenta.</p>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <form [formGroup] = "recoveryForm" (ngSubmit)="onLogin()">
+        <mat-form-field class="full-width" apperance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" formControlName="email" matInput autocomplete="new-password">
+            <mat-error *ngIf="isValidField('email')">
+                {{ getErrorMessage('email') }}
+            </mat-error>
+        </mat-form-field>
+    </form>
+    <mat-card-actions>
+      <button type="submit" mat-raised-button color="warm" [disabled]="recoveryForm.invalid">Generar token</button>
+      <a mat-raised-button href="./login">Cancelar</a>
+    </mat-card-actions>
+    <mat-card-footer>
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>

@@ -24,10 +24,6 @@ onLogin(){
   console.log(form);
 }
 
-limpiarCampos(){
-  var form=this.loginForm.value;
-}
-
 getErrorMessage(field:string){
  let message='';
  var form=this.loginForm.get(field);
