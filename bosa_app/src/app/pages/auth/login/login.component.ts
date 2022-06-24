@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 loginForm=this.fb.group({
-  username:['admin',[Validators.required]],
+  username:['',[Validators.required]],
   password:['',[Validators.required,Validators.minLength(5)]]
 });
   constructor(private fb:FormBuilder) { }
