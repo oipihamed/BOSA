@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 loginForm=this.fb.group({
-  username:['',[Validators.required]],
+  username:['',[Validators.required, UsernameValidator.cannotContainSpace]],
   password:['',[Validators.required,Validators.minLength(5)]]
 });
   constructor(private fb:FormBuilder) { }
@@ -32,6 +33,8 @@ getErrorMessage(field:string){
     message="Campo requerido";
   }else if(form.hasError("minlength")){
     message="El minimo de caracteres son 5";
+  } else if (form.hasError("cannotContainSpace")){
+    message="El nombre de usuario no puede contener espacios";
   }
  }
  return message; 
@@ -45,4 +48,14 @@ flag=form.touched || form.dirty && !form.valid
 }
 return flag;
 }
+}
+
+export class UsernameValidator {  
+  static cannotContainSpace(control: AbstractControl) : ValidationErrors | null {  
+      if((control.value as string).indexOf(' ') >= 0){  
+          return {cannotContainSpace: true}  
+      }  
+  
+      return null;  
+  }
 }
