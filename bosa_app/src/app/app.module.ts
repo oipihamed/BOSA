@@ -10,7 +10,8 @@ import { DetalleProductoComponent } from './components/detalle-producto/detalle-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MaterialModule } from './material.module';
-
+import { HttpClientModule } from '@angular/common/http';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { MaterialModule } from './material.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    NgxSpinnerModule,
     BrowserAnimationsModule,
     MaterialModule
   ],

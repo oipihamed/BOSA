@@ -53,10 +53,7 @@ class AuthController {
                 }
                 for (let usuario of lstUsers) {
                     if (usuario.password == password) {
-                        const ;
-                        (password, fechaRegistro);
-                        newUser;
-                        usuario;
+                        const { password, fechaRegistro } = usuario, newUser = __rest(usuario, ["password", "fechaRegistro"]);
                         var token = jsonwebtoken_1.default.sign(newUser, keySecret_1.default.keys.secret, { expiresIn: '1h' });
                         return res.json({ message: "Autenticación Correcta", token, code: 0 });
                     }

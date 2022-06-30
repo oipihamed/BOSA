@@ -15,9 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database/database"));
 class AuthDAO {
     getUserByUsername(username) {
-        const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-            return yield connection.query("Select* from tbl_usuario WHERE username=?", [username]);
-        }));
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query("Select* from tusuario WHERE username=?", [username]);
+            }));
+            return result;
+        });
     }
 }
 const dao = new AuthDAO();

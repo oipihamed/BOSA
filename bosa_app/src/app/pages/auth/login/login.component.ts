@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UserResponse } from 'app/shared/components/models/user.interface';
+import { AuthService } from '../services/auth.service';
+import {NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +15,7 @@ loginForm=this.fb.group({
   username:['',[Validators.required, UsernameValidator.cannotContainSpace]],
   password:['',[Validators.required,Validators.minLength(5)]]
 });
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder, private authSvc: AuthService, private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
   }
@@ -20,9 +23,16 @@ loginForm=this.fb.group({
 onLogin(){
   //Se verifica que el formulario sea correcto
   if(this.loginForm.invalid)return;  
+  
   //Obtener los datos del formulario
-  const form=this.loginForm.value;
-  console.log(form);
+  const formValue=this.loginForm.value;
+
+this.spinner.show();
+  this.authSvc.login(formValue)
+    .subscribe((user: UserResponse | void) => {
+      console.log(user);
+      this.spinner.hide();
+    });
 }
 
 getErrorMessage(field:string){

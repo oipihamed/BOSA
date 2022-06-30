@@ -27,7 +27,7 @@ class Server {
     routes() {
         this.app.use("/", indexRoutes_1.default);
         this.app.use("/api/usuarios", (req, res) => { res.json({ "mensaje": "LISTA DE USUARIOS" }); });
-        this.app.use("/api.auth", authRoutes_1.default);
+        this.app.use("/api/auth", authRoutes_1.default);
         this.app.use("/api/user", usuarioRoutes_1.default);
     }
     start() {
