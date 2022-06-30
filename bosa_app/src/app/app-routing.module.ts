@@ -21,7 +21,8 @@ pathMatch:'full',
   { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
   { path: 'login', loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule) },
 { path: 'accountRecovery', loadChildren: () => import('./pages/auth/recovery/recovery.module').then(m => m.RecoveryModule) },
-{ path: 'categoria', loadChildren: () => import('./pages/categorias/categoria/categoria.module').then(m => m.CategoriaModule) }
+{ path: 'categoria', loadChildren: () => import('./pages/categorias/categoria/categoria.module').then(m => m.CategoriaModule) },
+{ path: 'cart', loadChildren: () => import('./pages/cart/cart/cart.module').then(m => m.CartModule) }
 ];
 
 @NgModule({
