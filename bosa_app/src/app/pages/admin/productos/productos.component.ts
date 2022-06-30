@@ -1,6 +1,6 @@
 import { ReadVarExpr } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
 import { ProductoService } from 'app/services/producto.service';
 import { Categoria } from 'app/shared/components/models/categoria.interface';
 import { Producto, ProductoResponse } from 'app/shared/components/models/producto.interface';
@@ -34,7 +34,7 @@ export class ProductosComponent implements OnInit {
    }
 
 
-  agregarProducto() {
+  agregarProducto(form: { resetForm: () => void; }) {
     //Se verifica que el formulario sea correcto
     if (this.productoForm.invalid) return;
 
@@ -45,6 +45,7 @@ export class ProductosComponent implements OnInit {
     this.productSvc.agregarProducto(formValue)
       .subscribe((producto: ProductoResponse | void) => {
         this.spinner.hide();
+        form.resetForm();
       });
      
   }

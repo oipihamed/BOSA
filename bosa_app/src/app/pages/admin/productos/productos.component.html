@@ -2,7 +2,7 @@
     <h1>AGREGAR/ EDITAR PRODUCTO</h1>
     <mat-card>
         <mat-card-content>
-            <form [formGroup] = "productoForm" (ngSubmit)="agregarProducto()" >
+            <form #prodForm="ngForm" [formGroup] = "productoForm" (ngSubmit)="agregarProducto(prodForm)" >
                 <div class="row">
                     <div class="col-6 br-right">
                 <mat-form-field class="full-width" >
