@@ -18,7 +18,7 @@ class ProductoController{
            if (nombre.trim() === "" || descripcion.trim() === ""){
              return res.status(400).json({message : "Todos los campos son requeridos 2", code : 1});
             }
-            console.log(nombre);
+            console.log(rutaImagen);
             let respuestaBd= await dao.addProduct(nombre,descripcion,cantidad,precio,categoria,rutaImagen);
             console.log(respuestaBd); 
             if (respuestaBd.codigo==0 ) {

@@ -37,10 +37,10 @@ export class ProductosComponent implements OnInit {
   agregarProducto(form: { resetForm: () => void; }) {
     //Se verifica que el formulario sea correcto
     if (this.productoForm.invalid) return;
-
+    
     //Obtener los datos del formulario
     const formValue = this.productoForm.value;
-
+    formValue.rutaImagen=this.file?.name;
     this.spinner.show();
     this.productSvc.agregarProducto(formValue)
       .subscribe((producto: ProductoResponse | void) => {

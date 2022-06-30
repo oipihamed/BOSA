@@ -14,7 +14,6 @@ export class ProductoService {
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
   agregarProducto(productData: any): Observable<ProductoResponse | void> {
-    console.log(productData);
     return  this.http.post<ProductoResponse>(`${ environment.API_URL }/producto`, productData)
       .pipe(map((product:ProductoResponse) => {
         this.snackBar.open(product.message, '',  {
