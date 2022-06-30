@@ -36,10 +36,10 @@
 
                 <div>
                     <a class="accountRecovery" href="./accountRecovery">
-                        <p class="accountRecovery" style="color: blue;">¿Tienes problemas para iniciar sesión?</p>
+                        <button mat-button color="primary" (click)="openDialog()">¿Tienes problemas para iniciar sesión?</button>
                     </a>
                 </div>
-
+                <br>
                 <button type="submit" mat-raised-button color="warm" [disabled]="loginForm.invalid">Acceder</button>
             </form>
         </mat-card-content>

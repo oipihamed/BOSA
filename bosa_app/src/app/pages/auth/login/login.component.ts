@@ -3,6 +3,8 @@ import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@ang
 import { UserResponse } from 'app/shared/components/models/user.interface';
 import { AuthService } from '../services/auth.service';
 import {NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { RecoveryComponent } from '../recovery/recovery.component';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +17,13 @@ loginForm=this.fb.group({
   username:['',[Validators.required, UsernameValidator.cannotContainSpace]],
   password:['',[Validators.required,Validators.minLength(5)]]
 });
-  constructor(private fb:FormBuilder, private authSvc: AuthService, private spinner:NgxSpinnerService) { }
+  constructor(private fb:FormBuilder, private authSvc: AuthService, private spinner:NgxSpinnerService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  openDialog() {
+    this.dialog.open(RecoveryComponent);
   }
 
 onLogin(){

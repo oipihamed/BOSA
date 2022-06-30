@@ -56,3 +56,8 @@ mat-card {
     border-bottom:solid #adadad 2px;
 
   }
+
+  .RecoveryPassword {
+    width: 600px;
+    height: max-content;
+  }
