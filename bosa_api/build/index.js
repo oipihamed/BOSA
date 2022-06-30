@@ -10,6 +10,7 @@ console.log("Hola mundo");
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
+const productoRoutes_1 = __importDefault(require("./routes/productoRoutes"));
 var port = process.env.PORT || 3000;
 class Server {
     constructor() {
@@ -29,6 +30,7 @@ class Server {
         this.app.use("/api/usuarios", (req, res) => { res.json({ "mensaje": "LISTA DE USUARIOS" }); });
         this.app.use("/api/auth", authRoutes_1.default);
         this.app.use("/api/user", usuarioRoutes_1.default);
+        this.app.use("/api/producto", productoRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
