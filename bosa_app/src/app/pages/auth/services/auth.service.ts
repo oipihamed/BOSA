@@ -2,17 +2,29 @@ import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router} from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from 'app/interface/User';
 import { UserResponse } from 'app/shared/components/models/user.interface';
 import { environment } from 'environments/environment';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 
+const helper = new JwtHelperService();
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
+  private token = new BehaviorSubject<string>("");
+
+  constructor(private http: HttpClient, 
+    private router: Router, 
+    private snackBar: MatSnackBar) {
+      this.checkToken();
+    }
+
+    get token$(): Observable<string> {
+      return this.token.asObservable();
+    }
 
   login(userData: any): Observable<UserResponse | void> {
     return this.http.post<UserResponse>(`${ environment.API_URL }/auth`, userData)
@@ -20,6 +32,8 @@ export class AuthService {
 
         if(user.code === 0){
           this.router.navigate(['home']);
+          this.token.next(user.token);
+          this.saveLocalStorage(user.token);
         }
 
         return user;
@@ -27,11 +41,27 @@ export class AuthService {
       catchError((error) => this.handlerError(error)));
   }
 
-  logout() {}
+  logout() {
+    localStorage.removeItem("token");
+    this.token.next("");
+    this.router.navigate(["login"]);
+  }
 
-  checkToken() {}
+  checkToken() {
+    const token = localStorage.getItem("token");
+    if(token){
+      const isExpired = helper.isTokenExpired(token);
+      if(isExpired){
+        this.logout();
+      }else{
+        this.token.next(token);
+      }
+    }
+  }
 
-  saveLocalStorage(){}
+  saveLocalStorage(token: string){
+    localStorage.setItem("token", token);
+  }
 
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";

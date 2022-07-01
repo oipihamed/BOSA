@@ -10,8 +10,9 @@ import { DetalleProductoComponent } from './components/detalle-producto/detalle-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MaterialModule } from './material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,10 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -27,13 +27,13 @@ loginForm=this.fb.group({
   }
 
 onLogin(){
+
   //Se verifica que el formulario sea correcto
   if(this.loginForm.invalid)return;  
   
   //Obtener los datos del formulario
   const formValue=this.loginForm.value;
 
-this.spinner.show();
   this.authSvc.login(formValue)
     .subscribe((user: UserResponse | void) => {
       console.log(user);
