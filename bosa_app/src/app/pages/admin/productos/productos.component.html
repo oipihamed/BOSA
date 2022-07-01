@@ -1,0 +1,79 @@
+<div class="login-form">
+    <h1>AGREGAR/ EDITAR PRODUCTO</h1>
+    <mat-card>
+        <mat-card-content>
+            <form #prodForm="ngForm" [formGroup] = "productoForm" (ngSubmit)="agregarProducto(prodForm)" >
+                <div class="row">
+                    <div class="col-6 br-right">
+                <mat-form-field class="full-width" >
+                    <mat-label>Nombre del producto</mat-label>
+                    <input type="text" formControlName="nombre" matInput >
+                    <mat-error *ngIf="isValidField('nombre')">
+                        {{ getErrorMessage('nombre') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width" >
+                    <mat-label>Descripcion</mat-label>
+                    <textarea type="text" formControlName="descripcion" matInput ></textarea>
+                    <mat-error *ngIf="isValidField('descripcion')">
+                        {{ getErrorMessage('descripcion') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Precio</mat-label>
+                    <input type="number" formControlName="precio" matInput >
+                    <mat-error *ngIf="isValidField('precio')">
+                        {{ getErrorMessage('precio') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width" >
+                    <mat-label>Cantidad</mat-label>
+                    <input type="number" formControlName="cantidad" matInput >
+                    <mat-error *ngIf="isValidField('cantidad')">
+                        {{ getErrorMessage('cantidad') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width" >
+                    <mat-label> Categoria</mat-label>
+                <!-- <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" formControlName="categoria">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option.nombre}}
+                      </mat-option>
+                    </mat-autocomplete>-->
+                    <mat-select formControlName="categoria">
+                        <mat-option value=1>Equipo futbol</mat-option>
+                        <mat-option value=2>Zapatos</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isValidField('categoria')">
+                        {{ getErrorMessage('categoria') }}
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                   
+                </div>
+
+              
+            </div>
+            <div class="col-6">
+                <div class="col-12">
+                    <input formControlName="rutaImagen" type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput>
+                    <img [src]=" photoSelected || '../../../../assets/images/SubirArch.webp'" alt="Sin imagen" class="imgR" (click)="photoInput.click()">
+                  
+                </div>
+                <div class="col-12">
+                    
+                    <img src="../../../../assets/images/SubirArch.webp" class="imgR">
+                </div>
+                <div class="col-12">
+                    
+                    <img src="../../../../assets/images/SubirArch.webp" class="imgR">
+                </div>
+                <button type="submit" class="bRegistrar" mat-raised-button color="warm" [disabled]="productoForm.invalid">Agregar</button>
+            </div>
+            </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
