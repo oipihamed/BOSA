@@ -5,6 +5,7 @@ console.log("Hola mundo");
 import indexRoutes from './routes/indexRoutes';
 import authRoutes from './routes/authRoutes';
 import usuarioRoutes from './routes/usuarioRoutes';
+import productoRoutes from './routes/productoRoutes';
 var port = process.env.PORT || 3000;
  class Server{
     public app: Application;
@@ -27,6 +28,7 @@ var port = process.env.PORT || 3000;
         this.app.use("/api/usuarios", (req, res) => {res.json({"mensaje":"LISTA DE USUARIOS"})});
         this.app.use("/api/auth", authRoutes);
         this.app.use("/api/user", usuarioRoutes);
+        this.app.use("/api/producto",productoRoutes);
     }
     
     start():void{
