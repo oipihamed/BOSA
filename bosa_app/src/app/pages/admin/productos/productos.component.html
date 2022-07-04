@@ -58,7 +58,7 @@
             </div>
             <div class="col-6">
                 <div class="col-12">
-                    <input formControlName="rutaImagen" type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput>
+                    <input formControlName="rutaImagen" type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden>
                     <img [src]=" photoSelected || '../../../../assets/images/SubirArch.webp'" alt="Sin imagen" class="imgR" (click)="photoInput.click()">
                   
                 </div>

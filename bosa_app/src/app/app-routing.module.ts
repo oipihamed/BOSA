@@ -7,14 +7,11 @@ import { CheckSessionGuard } from './shared/guards/check-session.guard';
 
 const routes:Routes=[
 {
-  path:'signup',
-  component:SignupComponent
-},
-{
   path:'detalle',
   component:DetalleProductoComponent
 },
-{path:'',
+{
+  path:'',
 redirectTo:'/home',
 pathMatch:'full',
 },
@@ -26,7 +23,8 @@ pathMatch:'full',
 { path: 'categoria', loadChildren: () => import('./pages/categorias/categoria/categoria.module').then(m => m.CategoriaModule) },
 { path: 'cart', loadChildren: () => import('./pages/cart/cart/cart.module').then(m => m.CartModule) },
 { path: 'aProductos', loadChildren: () => import('./pages/admin/productos/productos.module').then(m => m.ProductosModule) },
-{ path: 'pedidoAdmin', loadChildren: () => import('./pages/pedidos/pedido-admin/pedido-admin.module').then(m => m.PedidoAdminModule) }
+{ path: 'pedidoAdmin', loadChildren: () => import('./pages/pedidos/pedido-admin/pedido-admin.module').then(m => m.PedidoAdminModule) },
+{ path: 'signup', loadChildren: () => import('./pages/auth/signup/signup.module').then(m => m.SignupModule) }
 ];
 
 @NgModule({

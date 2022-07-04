@@ -26,13 +26,6 @@ export class ProductoService {
       }),
       catchError((error) => this.handlerError(error)));
   }
-
-  logout() {}
-
-  checkToken() {}
-
-  saveLocalStorage(){}
-
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";
     if(error){
