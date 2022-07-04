@@ -45,7 +45,7 @@ class AuthController {
                 if (username.trim() === "" || password.trim() === "") {
                     return res.status(400).json({ message: "Todos los campos son requeridos", code: 1 });
                 }
-                return res.json({ username, password });
+                //return res.json({username,password});
                 //Obtener los datos del usuario
                 const lstUsers = yield authDAO_1.default.getUserByUsername(username);
                 if (lstUsers.length <= 0) {
