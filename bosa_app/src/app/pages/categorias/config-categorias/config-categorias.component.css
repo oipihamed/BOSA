@@ -1,0 +1,52 @@
+
+.contenedorTitulo{
+    margin-top: 60px;
+    min-height: 150px;
+    max-height: 200px;
+    background-color: #F8F8F8;
+  }
+  .tituloRI{
+    color: #444444;
+    
+  }
+  .tituloRI:hover{
+    color:#9D9D9D;
+  }
+  
+  .row{
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding:0px 40px ;
+  }
+  .col_Ti{
+    min-height: 150px;
+    border-bottom:solid #444444 2px;
+    transition: .5s;
+    padding-top: 90px;
+    margin-bottom: 50px;
+  }
+  .col_Ti:hover{
+    border-bottom:solid #adadad 2px;
+  }
+
+  .active{
+   
+    border-bottom:solid #adadad 2px;
+
+  }
+
+/*Estilos tablas*/
+table {
+  width: 100%;
+}
+.example-container {
+  height: auto;
+  overflow:visible;
+  justify-content: center;
+ display: flex;
+}
+th{
+  width: 20%;
+  font-size:larger ;
+}
