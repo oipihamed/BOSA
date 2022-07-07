@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RecoveryComponent } from './recovery.component';
 
@@ -8,6 +9,10 @@ describe('RecoveryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+    ],
       declarations: [ RecoveryComponent ]
     })
     .compileComponents();
