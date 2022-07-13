@@ -16,21 +16,30 @@
 <div class="login-form">
     <mat-card [class.mat-elevation-z8]="true">
         <mat-card-content>
-            <h1>Inicio de Sesion</h1>
+            <h1>Inicio de Sesión</h1>
             <form [formGroup] = "loginForm" (ngSubmit)="onLogin()">
                 <mat-form-field class="full-width" apperance="outline">
                     <mat-label>Usuario</mat-label>
                     <input type="text" formControlName="username" matInput autocomplete="new-password">
-                    <mat-error *ngIf="isValidField('username')">
+                    <!--<mat-error *ngIf="isValidField('username')">
                         {{ getErrorMessage('username') }}
+                    </mat-error>-->
+                    <mat-error>
+                        {{ baseForm.getErrorMessage(loginForm.get('username')) }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="full-width" apperance="outline">
                     <mat-label>Contraseña</mat-label>
-                    <input type="password" formControlName="password" matInput  autocomplete="new-password">
-                    <mat-error *ngIf="isValidField('password')">
+                    <input [type]="hide ? 'password' : 'text'" formControlName="password" matInput  autocomplete="new-password">
+                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide">
+                        <mat-icon> {{ hide ? 'visibility_off' : 'visibility' }} </mat-icon>
+                    </button>
+                    <!--<mat-error *ngIf="isValidField('password')">
                         {{ getErrorMessage('password') }}
+                    </mat-error>-->
+                    <mat-error>
+                        {{ baseForm.getErrorMessage(loginForm.get('password')) }}
                     </mat-error>
                 </mat-form-field>
 

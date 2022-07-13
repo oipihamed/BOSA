@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import {NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { RecoveryComponent } from '../recovery/recovery.component';
+import { BaseForm } from 'app/shared/utils/base-form';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,18 @@ import { RecoveryComponent } from '../recovery/recovery.component';
 })
 
 export class LoginComponent implements OnInit {
+
+hide = true;  
 loginForm=this.fb.group({
   username:['',[Validators.required, UsernameValidator.cannotContainSpace]],
-  password:['',[Validators.required,Validators.minLength(5)]]
+  password:['',[Validators.required, Validators.minLength(5)]]
 });
-  constructor(private fb:FormBuilder, private authSvc: AuthService, private spinner:NgxSpinnerService, public dialog: MatDialog) { }
+  constructor(
+    private fb:FormBuilder, 
+    private authSvc: AuthService, 
+    private spinner:NgxSpinnerService, 
+    public dialog: MatDialog,
+    public baseForm : BaseForm) { }
 
   ngOnInit(): void {
   }
@@ -41,7 +49,7 @@ onLogin(){
     });
 }
 
-getErrorMessage(field:string){
+/*getErrorMessage(field:string){
  let message='';
  var form=this.loginForm.get(field);
  if(form!=null){
@@ -63,7 +71,7 @@ if(form!=null){
 flag=form.touched || form.dirty && !form.valid
 }
 return flag;
-}
+}*/
 }
 
 export class UsernameValidator {  

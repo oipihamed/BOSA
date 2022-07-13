@@ -67,14 +67,15 @@
                                 {{ getErrorMessage('password')}}
                             </mat-error>
                         </mat-form-field>
+
                         <mat-form-field apperance="outline">
                             <input type="password" name="confirmPassword" placeholder="Repetir Contraseña" matInput
                                 formControlName="confirmPassword" #confirmPassword />
                             <mat-error *ngIf="isValidField('confirmPassword')">
                                 {{ getErrorMessage('confirmPassword')}}
                             </mat-error>
-                          
                         </mat-form-field>
+                        
                         <mat-form-field apperance="outline">
                             <input type="text" name="street" placeholder="Calle" matInput formControlName="street"
                                 #street />

@@ -107,7 +107,7 @@
 		}
 	});
 
-	$(document).ready(function () {
+	/*$(document).ready(function () {
 	    $(document).on("scroll", onScroll);
 	    
 	    //smoothscroll
@@ -145,7 +145,7 @@
 	            currLink.removeClass("active");
 	        }
 	    });
-	}
+	}*/
 
 
 	// Page loading animation

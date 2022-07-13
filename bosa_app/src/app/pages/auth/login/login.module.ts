@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule  } from "@angular/material/button";
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import {MatIconModule} from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatCardModule,
     MatInputModule,
+    MatIconModule,
     MatButtonModule,
     MatDialogModule
   ]
