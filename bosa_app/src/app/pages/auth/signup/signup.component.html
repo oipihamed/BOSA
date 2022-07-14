@@ -93,10 +93,11 @@
                     </div>
                     <div class="col-5">
                         <mat-form-field apperance="outline">
-                            <input id="state" type="checkbox" formControlName="state">
-                            <mat-select>
-                                <mat-option value=1>Guanjuato</mat-option>
-                                <mat-option value=2>Queretaro</mat-option>
+                            <mat-label>Selecciona un estado</mat-label>
+                            <mat-select matNativeControl id="state" formControlName="state">
+                              <mat-option [value]=0 disabled selected>Ninguno</mat-option>
+                              <mat-option [value]=1>Guanajuato</mat-option>
+                              <mat-option [value]=2>Queretaro</mat-option>
                             </mat-select>
                             <mat-error *ngIf="isValidField('state')">
                                 {{ getErrorMessage('state') }}
@@ -124,16 +125,16 @@
                     </div>
                     <div class="col-5">
                         <mat-form-field apperance="outline">
-                            <input type="number" name="phone" placeholder="(470)-779-6811" matInput
+                            <input type="number" name="phone" placeholder="(000)-000-0000" matInput
                                 formControlName="phone" #district />
                             <mat-error *ngIf="isValidField('phone')">
                                 {{ getErrorMessage('phone')}}
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12">
-                        <button class="bRegistrar" type="submit"
-                            [disabled]="signupForm.invalid">{{signupForm.invalid}}</button>
+                    <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12" >
+                        <button [ngStyle]="{'background-color':!signupForm.invalid ? '#252525' : '#FF0000'}" class="bRegistrar" type="submit" 
+                            [disabled]="signupForm.invalid" >Registrarse</button>
                     </div>
                     <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12">
                         <a class="bCancelar">Cancelar</a>

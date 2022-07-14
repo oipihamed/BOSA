@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router} from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from 'app/interface/User';
 import { UserResponse } from 'app/shared/components/models/user.interface';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
