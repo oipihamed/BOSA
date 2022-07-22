@@ -10,6 +10,15 @@ class AuthDAO{
         });
         return result;
     }
+
+    public async getUserByResetToken(resetToken: string){
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                "Select* from tusuario WHERE resetToken=?", [resetToken]
+            )
+        });
+        return result;
+    }
 }
 const dao= new AuthDAO();
 export default dao;
