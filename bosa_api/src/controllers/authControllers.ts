@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import keySecret from "../config/keySecret";
 import { transporter } from "../config/mailer";
 import pool from "../database/database";
+import bcryptjs from "bcryptjs";
 
 
 class AuthController {
@@ -32,7 +33,10 @@ class AuthController {
                 return res.status(404).json({ message: "El usuario y/o contraseña es incorrecto" });
             }
             for (let usuario of lstUsers) {
-                if (usuario.password == password) {
+                let hashSaved = usuario.password;
+                let compare = bcryptjs.compareSync(password, hashSaved)
+
+                if (compare) {
                     const { password, fechaRegistro, ...newUser } = usuario;
 
                     var token = jwt.sign(newUser, keySecret.keys.secret, { expiresIn: '1h' });
@@ -119,13 +123,15 @@ class AuthController {
             if (usuario.resetToken == resetToken) {
                 jwtPayload = jwt.verify(resetToken, keySecret.keys.jwtSecretReset);
 
+                let passwordHash = await bcryptjs.hash(newPassword, 8)
+
                 try {
-                    (await pool).query('UPDATE tusuario set password = ? WHERE resetToken = ?', [newPassword, resetToken]);
+                    (await pool).query('UPDATE tusuario set password = ? WHERE resetToken = ?', [passwordHash, resetToken]);
                 } catch (error) {
                     return res.status(401).json({ message: 'Algo sucedio' });
                 }
 
-                res.json({ message: 'La contraseña cambio!' })
+                res.json({ message: 'La contraseña cambio!'})
 
             } else {
                 return res.status(500).json({ message: "Algo ocurrio: Error del servidor" });
