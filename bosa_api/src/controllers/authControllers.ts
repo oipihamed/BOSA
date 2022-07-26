@@ -70,15 +70,15 @@ class AuthController {
             for (let usuario of lstUsers) {
                 if (usuario.username == username) {
                     const token = jwt.sign({ idUsurio: usuario.idUsurio, username: usuario.username }, keySecret.keys.jwtSecretReset, { expiresIn: '10m' });
-                    verificationLink = `http://localhost:3000/api/auth/new-password/${token}`;
+                    verificationLink = `http://localhost:4200/newpassword/${token}`;
 
                     try {
                         (await pool).query('UPDATE tusuario set resetToken = ? WHERE username = ?', [token, username]);
                     } catch (error) {
                         return res.status(400).json({ message: 'Ocurrio un error', code: 1 });
                     }
-                    
-                    
+
+
                     try {
                         // send mail with defined transport object
                         await transporter.sendMail({
@@ -86,8 +86,29 @@ class AuthController {
                             to: usuario.username, // list of receivers
                             subject: "Recuperar Contraseña", // Subject line
                             html: `
-                            <b>Por favor ingrese al link dando click</b>
-                            <a href="${verificationLink}"> Recuperar contraseña</a>
+                            <head><title>Gracias por tu preferencia</title>
+                            <style>
+                            * { margin: 0; padding: 0; box-sizing: border-box; } 
+                            body { font-size: 16px; font-weight: 300; color: #888; background-color:rgba(230, 225, 225, 0.5); line-height: 30px; text-align: center; }
+                            .contenedor{ width: 80%; min-height:auto; text-align: center; margin: 0 auto; padding: 40px; background: #ececec; border-top: 3px solid #84e619; }
+                            .bold{ color:#333; font-size:25px; font-weight:bold; }
+                            img{ margin-left: auto; margin-right: auto; display: block; padding:0px 0px 20px 0px; }
+                            </style>
+                            </head>
+                            <body>
+                            <div class='contenedor'>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <span><strong class='bold'> Recuperación de Contraseña</strong></span>
+                                <p>&nbsp;</p> 
+                                <p>Uniformes BOSA</p> 
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <p><strong>Por favor ingrese al link dando click</strong></p>
+                                <p>&nbsp;</p>
+                                <p><a href="${verificationLink}"> Recuperar contraseña</a></p>
+                            </div>
+                            </body>
                             `, // html body
                         });
                     } catch (error) {
@@ -105,33 +126,33 @@ class AuthController {
     };
 
     public async createNewPassword(req: Request, res: Response): Promise<Response<any, Record<string, any>> | undefined> {
-        const { newPassword } = req.body;
-        const resetToken = req.headers.reset as string;
+        const { password, restore } = req.body;
+        /*const resetToken = req.headers.reset as string;*/
 
-        if (!(resetToken && newPassword)) {
+        if (!(restore && password)) {
             return res.status(400).json({ message: 'Todos los campos son requeridos' });
         }
 
         let jwtPayload;
-        const lstUsers = await dao.getUserByResetToken(resetToken);
+        const lstUsers = await dao.getUserByResetToken(restore);
 
         if (lstUsers.length <= 0) {
             return res.status(404).json({ message: "No es posible llevar acabo lo requerido" });
         }
-        
-        for (let usuario of lstUsers) {
-            if (usuario.resetToken == resetToken) {
-                jwtPayload = jwt.verify(resetToken, keySecret.keys.jwtSecretReset);
 
-                let passwordHash = await bcryptjs.hash(newPassword, 8)
+        for (let usuario of lstUsers) {
+            if (usuario.resetToken == restore) {
+                jwtPayload = jwt.verify(restore, keySecret.keys.jwtSecretReset);
+
+                let passwordHash = await bcryptjs.hash(password, 8)
 
                 try {
-                    (await pool).query('UPDATE tusuario set password = ? WHERE resetToken = ?', [passwordHash, resetToken]);
+                    (await pool).query('UPDATE tusuario set password = ? WHERE resetToken = ?', [passwordHash, restore]);
                 } catch (error) {
                     return res.status(401).json({ message: 'Algo sucedio' });
                 }
 
-                res.json({ message: 'La contraseña cambio!'})
+                res.json({ message: 'La contraseña cambio!' })
 
             } else {
                 return res.status(500).json({ message: "Algo ocurrio: Error del servidor" });
