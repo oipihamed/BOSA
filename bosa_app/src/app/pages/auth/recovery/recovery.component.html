@@ -8,8 +8,8 @@
     </mat-card-content>
     <form [formGroup]="recoveryForm" (ngSubmit)="onRecovery()">
       <mat-form-field class="full-width" apperance="outline">
-        <mat-label>Email</mat-label>
-        <input type="email" formControlName="username" matInput>
+        <mat-label>Ingresa tu correo electronico</mat-label>
+        <input type="email" formControlName="email" matInput>
         <mat-error *ngIf="isValidField('email')">
           {{ getErrorMessage('email') }}
         </mat-error>

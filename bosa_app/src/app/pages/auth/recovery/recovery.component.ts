@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RecoveryComponent implements OnInit {
   recoveryForm = this.fb.group({
-    username: ['', [Validators.required, Validators.email, EmailValidator.cannotContainSpace]]
+    email: ['', [Validators.required, Validators.email, EmailValidator.cannotContainSpace]]
   })
 
   constructor(
@@ -58,7 +58,7 @@ export class RecoveryComponent implements OnInit {
       } else if (form.hasError("email")) {
         message = "Se requiere de un email";
       } else if (form.hasError("cannotContainSpace")) {
-        message = "El nombre de usuario no puede contener espacios";
+        message = "El correo no puede contener espacios";
       }
     }
     return message;

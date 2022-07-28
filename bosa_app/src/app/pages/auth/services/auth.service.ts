@@ -94,12 +94,8 @@ export class AuthService {
   newPassword(userData: any): Observable<UserResponse | void> {
     return this.http.put<UserResponse>(`${environment.API_URL}/auth/new-password/`, userData)
       .pipe(map((user: UserResponse) => {
-
-        if (user.code === 0) {
+          this.logout();
           this.router.navigate(['login']);
-        }
-
-        return user;
       }),
         catchError((error) => this.handlerError(error)));
   }
