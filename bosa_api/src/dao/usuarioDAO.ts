@@ -1,4 +1,6 @@
 import pool from "../database/database";
+import bcryptjs from "bcryptjs";
+
 class UsuarioDAO {
     private columnas = "(nombres,apellidos,username,password,email,fechaRegistro,calle,colonia,ciudad,telefono,idRol)";
 
@@ -14,19 +16,20 @@ class UsuarioDAO {
             console.log(lastName)
         const usernameBd = await pool.then(async (connection) => {
             return await connection.query(
-                "Select* from tusuario WHERE username=?", [username]
+                "Select * from tusuario WHERE username=?", [username]
             )
         });
         const emailBd = await pool.then(async (connection) => {
             return await connection.query(
-                "Select* from tusuario WHERE email=?", [email]
+                "Select * from tusuario WHERE email=?", [email]
             )
         });
         if (usernameBd != "" && emailBd != "") return { mensaje: "Username o email no disponibles", code: 1 };
         const result = await pool.then(async (connection) => {
+            let passwordHash = await bcryptjs.hash(password, 8)
             return await connection.query(
 //                `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${password}','${email}','${now.toLocaleDateString()}','${street}','${district}','${state}','${city}','${zipcode}','${phone}',1)`
-                `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${password}','${email}','${now.toLocaleDateString()}','${street}','${district}','${city}','${phone}',1)`
+                `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${passwordHash}','${email}','${now.toLocaleDateString()}','${street}','${district}','${city}','${phone}',1)`
             )
 
         });
