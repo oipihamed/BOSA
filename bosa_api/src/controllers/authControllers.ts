@@ -54,26 +54,27 @@ class AuthController {
 
     public async forgotPassword(req: Request, res: Response) {
         try {
-            const { username } = req.body;
+            const { email } = req.body;
 
-            if (!(username)) {
-                return res.status(400).json({ message: 'El Nombre de usuario es requerido' });
+            if (!(email)) {
+                return res.status(400).json({ message: 'El email es requerido' });
             }
 
             const message = 'Verifica tu email para resetear tu contraseña.';
             let verificationLink;
 
-            const lstUsers = await dao.getUserByUsername(username);
+            const lstUsers = await dao.getUserByEmail(email);
             if (lstUsers.length <= 0) {
-                return res.status(404).json({ message: "El usuario es incorrecto" });
+                return res.status(404).json({ message: "El email es incorrecto" });
             }
             for (let usuario of lstUsers) {
-                if (usuario.username == username) {
-                    const token = jwt.sign({ idUsurio: usuario.idUsurio, username: usuario.username }, keySecret.keys.jwtSecretReset, { expiresIn: '10m' });
+                if (usuario.email == email) {
+
+                    const token = jwt.sign({ idUsurio: usuario.idUsurio, email: usuario.email }, keySecret.keys.jwtSecretReset, { expiresIn: '10m' });
                     verificationLink = `http://localhost:4200/newpassword/${token}`;
 
                     try {
-                        (await pool).query('UPDATE tusuario set resetToken = ? WHERE username = ?', [token, username]);
+                        (await pool).query('UPDATE tusuario set resetToken = ? WHERE email = ?', [token, email]);
                     } catch (error) {
                         return res.status(400).json({ message: 'Ocurrio un error', code: 1 });
                     }
@@ -83,7 +84,7 @@ class AuthController {
                         // send mail with defined transport object
                         await transporter.sendMail({
                             from: '"El equipo de Uniformes BOSA" <noreply@uniformesbosa.com>', // sender address
-                            to: usuario.username, // list of receivers
+                            to: usuario.email, // list of receivers
                             subject: "Recuperar Contraseña", // Subject line
                             html: `
                             <head><title>Gracias por tu preferencia</title>
@@ -117,7 +118,7 @@ class AuthController {
 
                     return res.json({ message, code: 0 });
                 } else {
-                    return res.status(404).json({ message: "El usuario y/o contraseña es incorrecto" });
+                    return res.status(404).json({ message: "El email es incorrecto" });
                 }
             }
         } catch (error) {
