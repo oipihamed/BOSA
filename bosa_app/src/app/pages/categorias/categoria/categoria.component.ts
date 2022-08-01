@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Categoria, CategoriaService} from '../../../services/categoria.service';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-categoria',
@@ -7,9 +9,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriaComponent implements OnInit {
 
-  constructor() { }
+  //variables
+  ListarCategoriass!: Categoria[];
+  
+  
+
+  constructor(private CategoriaService:CategoriaService, private router:Router, private activeRoute:ActivatedRoute) { }
+
 
   ngOnInit(): void {
+    this.listarUnaCategoria();
+  }
+
+  listarUnaCategoria(){
+    const id_entrada = <string>this.activeRoute.snapshot.params['id'];
+    console.log('id de entrada: '+id_entrada);
+    if(id_entrada){
+      this.CategoriaService.listarUnaCategoria(id_entrada).subscribe(
+        res=>{
+          console.log(res)
+          this.ListarCategoriass=<any>res;
+        },
+        err => console.log(err)
+      );
+    }
+  }
+
+  direccionarDetalle(id:string){
+    this.router.navigate(['/detalle/'+id]);
   }
 
 }

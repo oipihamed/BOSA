@@ -8,8 +8,12 @@ class ProductoRoutes {
         this.config();
     }
     config() {
-        //listado
-        this.router.get('/', /*[checkJwt],*/ productoController_1.productoController.listar);
+        //listado todos los productos
+        this.router.get('/', /*[checkJwt],*/ productoController_1.productoController.listarProductos);
+        //listado todos los productos en Oferta
+        this.router.get('/ofer', productoController_1.productoController.listarProductosOferta);
+        //Listar 1 producto
+        this.router.get('/:idProducto', productoController_1.productoController.listarProducto);
         //insercion
         this.router.post('/', /*[checkJwt],*/ productoController_1.productoController.insertarProducto);
         //actualizar

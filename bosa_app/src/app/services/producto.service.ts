@@ -13,6 +13,18 @@ export class ProductoService {
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
+  listarProductos(){
+    return  this.http.get(`${ environment.API_URL }/producto`)
+  }
+
+  listarProductosOferta(){
+    return  this.http.get(`${ environment.API_URL }/producto/ofer`)
+  }
+
+  detalleProducto(id:string){
+    return  this.http.get(`${ environment.API_URL }/producto/${id} `)
+  }
+  
   agregarProducto(productData: any): Observable<ProductoResponse | void> {
     return  this.http.post<ProductoResponse>(`${ environment.API_URL }/producto`, productData)
       .pipe(map((product:ProductoResponse) => {
@@ -26,6 +38,7 @@ export class ProductoService {
       }),
       catchError((error) => this.handlerError(error)));
   }
+
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";
     if(error){
@@ -41,4 +54,13 @@ export class ProductoService {
 
     return throwError(errorMessage);
   }
+}
+
+export interface Producto{
+  idProducto?:string;
+  nombre?:string;
+  descripcion?:string;
+  cantidadExistencia?:string;
+  precio?:string;
+  rutaImagen?:string;
 }

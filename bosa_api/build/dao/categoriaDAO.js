@@ -13,31 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database/database"));
-class AuthDAO {
-    getUserByUsername(username) {
+class CategoriaDAO {
+    //Para obtener las categorias
+    getCategorias() {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query("Select * from tusuario WHERE username=?", [username]);
+                return yield connection.query("Select * from ccategoria LIMIT 0, 4");
             }));
             return result;
         });
     }
-    getUserByEmail(email) {
+    //Para obtener una Categoria
+    getCategoria(idCategoria) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query("Select * from tusuario WHERE email=?", [email]);
-            }));
-            return result;
-        });
-    }
-    getUserByResetToken(resetToken) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query("Select * from tusuario WHERE resetToken=?", [resetToken]);
+                return yield connection.query("SELECT * FROM ccategoria cc INNER JOIN tproducto tp on cc.idCategoria = tp.idCategoria INNER JOIN cimagen ci on tp.idProducto = ci.idProducto where cc.idCategoria = ? ", [idCategoria]);
             }));
             return result;
         });
     }
 }
-const dao = new AuthDAO();
+const dao = new CategoriaDAO();
 exports.default = dao;

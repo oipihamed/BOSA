@@ -20,10 +20,29 @@ class ProductoDAO {
         this.resultIm = false;
         this.sMensajeError = "";
     }
+    //Para obtener todos los productos
     getProducts() {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query("Select * from tproducto");
+                return yield connection.query("Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto LIMIT 0, 3");
+            }));
+            return result;
+        });
+    }
+    //Para obtener todos los productos EN OFERTA
+    getProductsOfer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query("Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto WHERE estatusOferta = 1 ORDER BY RAND() LIMIT 0, 3;");
+            }));
+            return result;
+        });
+    }
+    //Para obtener solo 1 Producto
+    getProducto(idProducto) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query("Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto WHERE tp.idProducto = ? ", [idProducto]);
             }));
             return result;
         });

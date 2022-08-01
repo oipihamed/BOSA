@@ -8,7 +8,12 @@ class AuthRoutes {
         this.config();
     }
     config() {
+        // Login
         this.router.post('/', authControllers_1.authController.iniciarSesion);
+        //Forgot Password
+        this.router.put('/forgot-password', authControllers_1.authController.forgotPassword);
+        //Create new Password
+        this.router.put('/new-password/', authControllers_1.authController.createNewPassword);
     }
 }
 const authRoutes = new AuthRoutes();

@@ -26,8 +26,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.productoController = void 0;
 const productoDAO_1 = __importDefault(require("../dao/productoDAO"));
 class ProductoController {
-    listar(req, res) {
-        res.json({ message: "listar" });
+    //listar todos los productos
+    listarProductos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield productoDAO_1.default.getProducts();
+                res.json(result);
+            }
+            catch (error) {
+                return res.status(500).json({ message: `${error.message}` });
+            }
+        });
+    }
+    //listar todos los productos en Oferta
+    listarProductosOferta(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield productoDAO_1.default.getProductsOfer();
+                res.json(result);
+            }
+            catch (error) {
+                return res.status(500).json({ message: `${error.message}` });
+            }
+        });
+    }
+    //listar un producto
+    listarProducto(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // se obtienen los datos del body
+                var { idProducto } = req.params;
+                const result = yield productoDAO_1.default.getProducto(parseInt(idProducto));
+                res.json(result);
+            }
+            catch (error) {
+                return res.status(500).json({ message: `${error.message}` });
+            }
+        });
     }
     insertarProducto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

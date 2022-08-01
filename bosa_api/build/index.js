@@ -11,6 +11,7 @@ const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
 const productoRoutes_1 = __importDefault(require("./routes/productoRoutes"));
+const categoriaRoutes_1 = __importDefault(require("./routes/categoriaRoutes"));
 var port = process.env.PORT || 3000;
 class Server {
     constructor() {
@@ -31,6 +32,7 @@ class Server {
         this.app.use("/api/auth", authRoutes_1.default);
         this.app.use("/api/user", usuarioRoutes_1.default);
         this.app.use("/api/producto", productoRoutes_1.default);
+        this.app.use("/api/categoria", categoriaRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

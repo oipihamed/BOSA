@@ -6,14 +6,36 @@ class ProductoDAO{
     private imagencol:string="(rutaImagen,idProducto)";
     public resultIm:Boolean=false;
     private sMensajeError="";
+
+    //Para obtener todos los productos
     public async getProducts(){
         const result = await pool.then(async(connection)=>{
             return await connection.query(
-                "Select * from tproducto"
+                "Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto LIMIT 0, 3"
             )
         });
         return result;
     }
+
+    //Para obtener todos los productos EN OFERTA
+    public async getProductsOfer(){
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                "Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto WHERE estatusOferta = 1 ORDER BY RAND() LIMIT 0, 3;"
+            )
+        });
+        return result;
+    }
+
+    //Para obtener solo 1 Producto
+    public async getProducto(idProducto: number){
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                "Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto WHERE tp.idProducto = ? ", [idProducto]);
+        });
+        return result;
+    }
+
     public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:number,categoria:string,rutaImagen:string){
     try {
             

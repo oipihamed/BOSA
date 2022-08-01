@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database/database"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class UsuarioDAO {
     constructor() {
         this.columnas = "(nombres,apellidos,username,password,email,fechaRegistro,calle,colonia,ciudad,telefono,idRol)";
@@ -29,17 +30,18 @@ class UsuarioDAO {
                     return { mensaje: "Todos los campos son requeridos", code: 1 };
                 console.log(lastName);
                 const usernameBd = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                    return yield connection.query("Select* from tusuario WHERE username=?", [username]);
+                    return yield connection.query("Select * from tusuario WHERE username=?", [username]);
                 }));
                 const emailBd = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                    return yield connection.query("Select* from tusuario WHERE email=?", [email]);
+                    return yield connection.query("Select * from tusuario WHERE email=?", [email]);
                 }));
                 if (usernameBd != "" && emailBd != "")
                     return { mensaje: "Username o email no disponibles", code: 1 };
                 const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                    let passwordHash = yield bcryptjs_1.default.hash(password, 8);
                     return yield connection.query(
                     //                `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${password}','${email}','${now.toLocaleDateString()}','${street}','${district}','${state}','${city}','${zipcode}','${phone}',1)`
-                    `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${password}','${email}','${now.toLocaleDateString()}','${street}','${district}','${city}','${phone}',1)`);
+                    `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${passwordHash}','${email}','${now.toLocaleDateString()}','${street}','${district}','${city}','${phone}',1)`);
                 }));
                 if (result.affectedRows != 0) {
                     // const user = await pool.then(async (connection) => {

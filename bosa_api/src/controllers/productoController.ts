@@ -2,8 +2,42 @@ import { Request , Response} from 'express';
 import dao from '../dao/productoDAO';
 
 class ProductoController{
-    public listar(req: Request, res: Response) { 
-        res.json({ message : "listar"})
+     //listar todos los productos
+    public async listarProductos(req: Request, res: Response) {
+        try {
+
+            const result = await dao.getProducts();
+
+            res.json(result);
+        } catch (error: any) {
+            return res.status(500).json({ message : `${error.message}` });
+        }
+    }
+
+    //listar todos los productos en Oferta
+    public async listarProductosOferta(req: Request, res: Response) {
+        try {
+
+            const result = await dao.getProductsOfer();
+
+            res.json(result);
+        } catch (error: any) {
+            return res.status(500).json({ message : `${error.message}` });
+        }
+    }
+
+    //listar un producto
+    public async listarProducto(req: Request, res: Response) {
+        try {
+            // se obtienen los datos del body
+            var { idProducto } = req.params;
+
+            const result = await dao.getProducto(parseInt(idProducto));
+
+            res.json(result);
+        } catch (error: any) {
+            return res.status(500).json({ message : `${error.message}` });
+        }
     }
 
     public async insertarProducto(req: Request, res: Response) {
@@ -33,7 +67,7 @@ class ProductoController{
         return res.status(500).json({message: "Ocurrio un error", code:1})
        }
        
-     }
+    }
 
     public actualizar(req: Request, res: Response) { 
         res.json({ message : "actulizar"})

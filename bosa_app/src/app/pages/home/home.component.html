@@ -11,60 +11,28 @@
 </div><br>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group col">
-                <div class="item">
-                    <div class="thumb">
-                        <img src="../../../assets/images/imagen_ejemplo.jpg" width="400">
-                    </div>
-                    <div class="quantity-content">
-                        <div class="left-content">
-                            <h4>Producto 1</h4>
-                            <span>$XX.XX</span>
+        <div *ngFor="let Producto of ListarProductoss">
+            <div class="col-sm-4">
+                <div class="form-group col">
+                    <div class="item">
+                        <div class="thumb">
+                            <img src="../../../{{Producto.rutaImagen}}" width="400">
                         </div>
-                        <div class="right-content">
-                            <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                        </div>
-                    </div>                    
+                        <div class="quantity-content">
+                            <div class="left-content">
+                                <h4>{{Producto.nombre}}</h4>
+                                <span>$ {{Producto.precio}}</span>
+                            </div>
+                            <div class="right-content">
+                                <button (click)="direccionarDetalle(Producto.idProducto!)"><i class="fa fa-eye"></i></button>
+                            </div>
+                        </div>  
+                    <div>                  
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="form-group col">
-                <div class="item">
-                    <div class="thumb">
-                        <img src="../../../assets/images/imagen_ejemplo.jpg" width="400">
-                    </div>
-                    <div class="quantity-content">
-                        <div class="left-content">
-                            <h4>Producto 1</h4>
-                            <span>$XX.XX</span>
-                        </div>
-                        <div class="right-content">
-                            <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group col">
-                <div class="item">
-                    <div class="thumb">
-                        <img src="../../../assets/images/imagen_ejemplo.jpg" width="400">
-                    </div>
-                    <div class="quantity-content">
-                        <div class="left-content">
-                            <h4>Producto 1</h4>
-                            <span>$XX.XX</span>
-                        </div>
-                        <div class="right-content">
-                            <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-        </div>
+        
+        
         <div class="col-12 justify-content-center" style="text-align: center;">
             <a  href="#" >
                 <button type="button" class="btn btn-secondary center-block">Ver más</button>
@@ -89,60 +57,27 @@
     
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group col">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="../../../assets/images/imagen_ejemplo.jpg" width="400">
-                            </div>
-                            <div class="quantity-content">
-                                <div class="left-content">
-                                    <h4>Oferta 1</h4>
-                                    <span>$XX.XX</span>
+                <div *ngFor="let ProductosOferta of ListarProductosOferta">
+                    <div class="col-sm-4">
+                        <div class="form-group col">
+                            <div class="item">
+                                <div class="thumb">
+                                    <img src="../../../{{ProductosOferta.rutaImagen}}" width="400">
                                 </div>
-                                <div class="right-content">
-                                    <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div> 
+                                <div class="quantity-content">
+                                    <div class="left-content">
+                                        <h4>{{ProductosOferta.nombre}}</h4>
+                                        <span>$ {{ProductosOferta.precio}}</span>
+                                    </div>
+                                    <div class="right-content">
+                                        <button (click)="direccionarDetalle(ProductosOferta.idProducto!)"><i class="fa fa-eye"></i></button>
+                                    </div>
+                                </div>  
+                            <div>                  
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="form-group col">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="../../../assets/images/imagen_ejemplo.jpg" width="400">
-                            </div>
-                            <div class="quantity-content">
-                                <div class="left-content">
-                                    <h4>Oferta 1</h4>
-                                    <span>$XX.XX</span>
-                                </div>
-                                <div class="right-content">
-                                    <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group col">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="../../../assets/images/imagen_ejemplo.jpg" width="400">
-                            </div>
-                            <div class="quantity-content">
-                                <div class="left-content">
-                                    <h4>Oferta 1</h4>
-                                    <span>$XX.XX</span>
-                                </div>
-                                <div class="right-content">
-                                    <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-12 justify-content-center" style="text-align: center;">
                     <a  href="#" >
                         <button type="button" class="btn btn-secondary center-block">Ver más</button>
@@ -163,65 +98,28 @@
                         <div class="inner-content">
                             <h4>Todos los Productos</h4>
                             <div class="main-border-button">
-                                <a href="#">Ver Más!</a>
+                                <a href="#"><button>Ver Más!</button></a>
                             </div>
                         </div>
-                        <img src="../../../assets/images/imagen_ejemplo2.jpg" alt="">
+                        <img src="../../../assets/images/imagen_ejemplo2.jpg" alt="500px">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="right-content">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content">
-                                        <h4>Mas Vendidos</h4>
-                                        <div class="main-border-button">
-                                            <a href="#">Ver Más!</a>
+                        <div *ngFor="let Categoria of ListarCategoriass">
+                            <div class="col-lg-6">
+                                <div class="right-first-image">
+                                    <div class="thumb">
+                                        <div class="inner-content">
+                                            <h4>{{Categoria.nombre}}</h4>
+                                            <div class="main-border-button">
+                                                <button (click)="direccionarCategoria(Categoria.idCategoria!)">Ver Más!</button>
+                                            </div>
                                         </div>
+                                        <img src="../../../assets/images/imagen_ejemplo2.jpg">
                                     </div>
-                                    <img src="../../../assets/images/imagen_ejemplo2.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content">
-                                        <h4>Nuevos</h4>
-                                        <div class="main-border-button">
-                                            <a href="#">Ver Más!</a>
-                                        </div>
-                                    </div>
-                                    <img src="../../../assets/images/imagen_ejemplo2.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content">
-                                        <h4>Balones</h4>
-                                        <div class="main-border-button">
-                                            <a href="#">Ver Más!</a>
-                                        </div>
-                                    </div>
-                                    <img src="../../../assets/images/imagen_ejemplo2.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content">
-                                        <h4>Accesorios</h4>
-                                        <div class="main-border-button">
-                                            <a href="#">Ver Más!</a>
-                                        </div>
-                                    </div>
-                                    <img src="../../../assets/images/imagen_ejemplo2.jpg">
                                 </div>
                             </div>
                         </div>
