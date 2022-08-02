@@ -37,11 +37,11 @@ class AuthController {
                 let compare = bcryptjs.compareSync(password, hashSaved)
 
                 if (compare) {
-                    const { password, fechaRegistro, ...newUser } = usuario;
+                    const { password, fechaRegistro,idRol, ...newUser } = usuario;
 
                     var token = jwt.sign(newUser, keySecret.keys.secret, { expiresIn: '1h' });
 
-                    return res.json({ message: "Autenticación Correcta", token, code: 0 });
+                    return res.json({ message: "Autenticación Correcta", token,idRol, code: 0 });
                 } else {
                     return res.status(404).json({ message: "El usuario y/o contraseña es incorrecto" });
                 }

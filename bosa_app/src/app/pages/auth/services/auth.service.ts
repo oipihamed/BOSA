@@ -14,7 +14,7 @@ const helper = new JwtHelperService();
 export class AuthService {
 
   private token = new BehaviorSubject<string>("");
-
+  private idRol= new BehaviorSubject<string>("");
   constructor(private http: HttpClient,
     private router: Router,
     private snackBar: MatSnackBar) {
@@ -24,6 +24,9 @@ export class AuthService {
   get token$(): Observable<string> {
     return this.token.asObservable();
   }
+  get idRol$(): Observable<string> {
+    return this.idRol.asObservable();
+  }
 
   login(userData: any): Observable<UserResponse | void> {
     return this.http.post<UserResponse>(`${environment.API_URL}/auth`, userData)
@@ -32,7 +35,9 @@ export class AuthService {
         if (user.code === 0) {
           this.router.navigate(['home']);
           this.token.next(user.token);
+          this.idRol.next(user.idRol);
           this.saveLocalStorage(user.token);
+          this.saveLocalStorageRol(user.idRol);
         }
 
         return user;
@@ -42,24 +47,32 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("rol");
     this.token.next("");
     this.router.navigate(["login"]);
   }
 
   checkToken() {
     const token = localStorage.getItem("token");
+    const rol=localStorage.getItem("rol");
     if (token) {
       const isExpired = helper.isTokenExpired(token);
       if (isExpired) {
         this.logout();
       } else {
         this.token.next(token);
+        if(rol){
+          this.idRol.next(rol);
+        }        
       }
     }
   }
 
   saveLocalStorage(token: string) {
     localStorage.setItem("token", token);
+  }
+  saveLocalStorageRol(rol: string) {
+    localStorage.setItem("rol", rol);
   }
 
   handlerError(error: any): Observable<never> {
