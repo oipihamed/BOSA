@@ -1,8 +1,11 @@
+<h1 mat-dialog-title>{{ data?.title }}</h1>
+<mat-dialog-content>
+
 <div class="login-form">
     <h1>AGREGAR/ EDITAR PRODUCTO</h1>
     <mat-card>
         <mat-card-content>
-            <form #prodForm="ngForm" [formGroup] = "productoForm" (ngSubmit)="agregarProducto(prodForm)" >
+            <form  [formGroup] = "productoForm" (ngSubmit)="agregarProducto()" >
                 <div class="row">
                     <div class="col-6 br-right">
                 <mat-form-field class="full-width" >
@@ -78,10 +81,17 @@
     </div>
 </ng-template>
                
-    <button type="submit" class="bRegistrar" mat-raised-button color="warm" [disabled]="productoForm.invalid">Agregar</button>
+    <button type="submit" class="bRegistrar" mat-raised-button color="warm" [disabled]="productoForm.invalid">{{ titleButton }}</button>
             </div>
             </div>
             </form>
         </mat-card-content>
     </mat-card>
 </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+        Cerrar
+    </button>
+</mat-dialog-actions>

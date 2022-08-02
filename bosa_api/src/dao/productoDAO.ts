@@ -16,6 +16,14 @@ class ProductoDAO{
         });
         return result;
     }
+    public async getAllProducts(){
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                "Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto"
+            )
+        });
+        return result;
+    }
 //Insertar Producto
 public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:number,categoria:string,rutaImagen:string[]){
     try {
@@ -73,8 +81,33 @@ public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:
         });
         return result;
     }
-
-   
+//Eliminar producto
+public async eliminar(idProducto: number) {
+    const result = await pool.then( async (connection) => {
+        return await connection.query(
+            " DELETE FROM tproducto WHERE idProducto = ? ", [idProducto]);
+    });
+    return result;
+}
+  //Actualizar producto
+  public async actualizar(producto: any, idProducto: number) {
+    try {
+    const result = await pool.then( async (connection) => {
+        return await connection.query(
+           // " UPDATE tproducto SET ? WHERE idProducto = ? ", [producto, idProducto]);
+          "UPDATE tproducto SET ? where  idProducto = ?",[producto,idProducto]);
+    });
+    console.log(result);
+    if(result.affectedRows!=0){
+        return {codigo:0,mensaje:"Actualizado correctamente"}
+    }else{
+        return  {codigo:1,mensaje:"No se ha actualizado"}
+    }
+}catch(error)
+    {
+        return {codigo:1,mensaje:error}
+    }
+} 
 }
 const dao= new ProductoDAO();
 export default dao;

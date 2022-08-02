@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ProductoResponse } from 'app/shared/components/models/producto.interface';
+import { Producto, ProductoResponse } from 'app/shared/components/models/producto.interface';
 import { environment } from 'environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 export class ProductoService {
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
-
+  
   agregarProducto(productData: any): Observable<ProductoResponse | void> {
 
     return  this.http.post<ProductoResponse>(`${ environment.API_URL }/producto`,productData)
@@ -27,6 +27,14 @@ export class ProductoService {
       }),
       catchError((error) => this.handlerError(error)));
   }
+  delete(idProducto: number): Observable<any> {
+    return this.http.delete<any>(`${ environment.API_URL }/producto/${idProducto}`)
+  } 
+  update(producto: Producto): Observable<any> {
+    return this.http.put<any>(`${ environment.API_URL }/producto`, producto)
+    .pipe(catchError( (error) => this.handlerError(error)));
+  }
+
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";
     if(error){

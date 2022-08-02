@@ -1,8 +1,9 @@
 import { Request , Response} from 'express';
 import dao from '../dao/productoDAO';
+import validator from 'validator';
 
 class ProductoController{
-     //listar todos los productos
+     //listar tres productos
     public async listarProductos(req: Request, res: Response) {
         try {
 
@@ -13,6 +14,17 @@ class ProductoController{
             return res.status(500).json({ message : `${error.message}` });
         }
     }
+  //listar todos los productos
+  public async listarAllProductos(req: Request, res: Response) {
+    try {
+
+        const result = await dao.getAllProducts();
+
+        res.json(result);
+    } catch (error: any) {
+        return res.status(500).json({ message : `${error.message}` });
+    }
+}
 
     //listar todos los productos en Oferta
     public async listarProductosOferta(req: Request, res: Response) {
@@ -39,7 +51,7 @@ class ProductoController{
             return res.status(500).json({ message : `${error.message}` });
         }
     }
-
+//Insertar productos
     public async insertarProducto(req: Request, res: Response) {
         try {
           //Se obtiene los datos de la peticion
@@ -77,13 +89,79 @@ class ProductoController{
         
       }
 
-    public actualizar(req: Request, res: Response) { 
-        res.json({ message : "actulizar"})
-    }
+    public async actualizar(req: Request, res: Response) { 
+        try {
+            
+            // se obtienen los datos del body
+            var producto = req.body;
+           
+            // validar que los datos no sean nulos o indefinidos
+            if (!producto.idProducto
+                || !producto.nombre
+                || !producto.descripcion
+                || !producto.cantidadExostencia
+                || !producto.precio
+                || !producto.categoria) {
+                    return res.status(404).json({ message: "Todos los datos son requeridos", code: 1});
+            }
 
-    public eliminar(req: Request, res: Response) { 
-        res.json({ message : "eliminar"})
+            // se verifica que los datos no se encuentren vacios
+            if (producto.idProducto == '0'
+                || validator.isEmpty(producto.nombre.trim())
+                || validator.isEmpty(producto.descripcion.trim())
+                || producto.categoria == '0') {
+                    return res.status(404).json({ message: "Todos los datos son requeridos", code: 1});
+            }
+            const newProduct = {
+                nombre: producto.nombre.trim(),
+                descripcion: producto.descripcion.trim(),
+                precio: producto.precio,
+                cantidadExistencia: producto.cantidadExostencia,
+                idCategoria:producto.categoria
+            }
+            // actualización de los datos
+            const respuestaBd = await dao.actualizar(newProduct, producto.idProducto);
+            if (respuestaBd.codigo==0 ) {
+                console.log(respuestaBd.mensaje);
+                    return res.json ({ message:respuestaBd.mensaje, code:respuestaBd.codigo});
+                }else{
+                    console.log(respuestaBd.mensaje);
+                    return res.status(404).json({message:respuestaBd.mensaje,code:respuestaBd.codigo});
+                }
+
+        } catch (error: any) {
+            return res.status(500).json({ message : `${error.message}` });
+        }
     }
+//Eliminar productos
+public async eliminar(req: Request, res: Response) {
+    try {
+        // se obtienen los datos del body
+        var { idProducto } = req.params;
+
+        // validar que los datos no sean nulos o indefinidos
+        if (!idProducto) {
+                return res.status(404).json({ message: "Todos los datos son requeridos", code: 1});
+        }
+
+        // se verifica que los datos no se encuentren vacios
+        if (validator.isEmpty(idProducto.trim())) {
+                return res.status(404).json({ message: "Todos los datos son requeridos", code: 1});
+        }
+
+        // actualización de los datos
+        const result = await dao.eliminar(parseInt(idProducto));
+
+        if (result.affectedRows > 0) {
+            return res.json({message: "Los datos se eliminaron correctamente", code: 0});
+        } else {
+            return res.status(404).json({ message: result.message, code: 1});
+        }
+
+    } catch (error: any) {
+        return res.status(500).json({ message : `${error.message}` });
+    }
+}
 }
 function decodeBase64Image(dataString: string) 
 {
