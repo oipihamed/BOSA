@@ -19,8 +19,8 @@ var port = process.env.PORT || 3000;
         this.app.set('port', process.env.PORT || 3000);
         this.app.use(morgan("dev"));
         this.app.use(cors());
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({extended:false}));
+        this.app.use(express.json({limit:'25mb'}));
+        this.app.use(express.urlencoded({extended:false,limit:'25mb'}));
 
     }
 

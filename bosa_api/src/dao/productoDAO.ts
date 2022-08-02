@@ -2,7 +2,7 @@ import { query } from 'express';
 import { Connection } from 'promise-mysql';
 import pool from '../database/database';
 class ProductoDAO{
-    private columnas:string ="(nombre,descripcion,cantidadExistencia,precio,estatus,idCategoria)";
+    private columnas:string ="(nombre,descripcion,cantidadExistencia,precio,estatusOferta,idCategoria)";
     private imagencol:string="(rutaImagen,idProducto)";
     public resultIm:Boolean=false;
     private sMensajeError="";
@@ -16,7 +16,45 @@ class ProductoDAO{
         });
         return result;
     }
-
+//Insertar Producto
+public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:number,categoria:string,rutaImagen:string[]){
+    try {
+        //var dirname=process.cwd();
+        //var dir=dirname.split('\\');
+        //dirname=dir.join('/');
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                `INSERT INTO tproducto ${this.columnas} values ('${nombre}','${descripcion}',${cantidad},${precio},1,${categoria})`
+            )
+                
+        });
+       if(result.affectedRows!=0){
+        var query=`INSERT INTO cimagen ${this.imagencol} values `;
+        var count=0;
+        rutaImagen.forEach(e => {
+            query+=`('${e}',${result.insertId}),`
+             });
+             query=query.substring(0, query.length - 1);
+             query+=`;`;
+             
+         const resultImg=await pool.then(async(connection)=>{
+                    return await connection.query(query
+                   );
+                });
+       if(resultImg.affectedRows!=0){
+         this.resultIm=true;
+       }
+       }
+    if(this.resultIm){
+        return {codigo:0,mensaje:"Insertado correctamente"}
+    }else{
+        return  {codigo:1,mensaje:"No se ha insertado"}
+    }
+    } catch (error) {
+        return {codigo:1,mensaje:error}
+    }     
+    }
+//Fin insertar producto
     //Para obtener todos los productos EN OFERTA
     public async getProductsOfer(){
         const result = await pool.then(async(connection)=>{
@@ -36,35 +74,7 @@ class ProductoDAO{
         return result;
     }
 
-    public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:number,categoria:string,rutaImagen:string){
-    try {
-            
-        const result = await pool.then(async(connection)=>{
-            return await connection.query(
-                `INSERT INTO tproducto ${this.columnas} values ('${nombre}','${descripcion}',${cantidad},${precio},1,${categoria})`
-            )
-                
-        });
-       if(result.affectedRows!=0){
-         const resultImg=await pool.then(async(connection)=>{
-                    return await connection.query(
-                        `INSERT INTO cimagen ${this.imagencol} values ('${rutaImagen}',${result.insertId});`
-                   );
-                  
-                });
-       if(resultImg.affectedRows!=0){
-         this.resultIm=true;
-       }
-       }
-    if(this.resultIm){
-        return {codigo:0,mensaje:"Insertado correctamente"}
-    }else{
-        return  {codigo:1,mensaje:"No se ha insertado"}
-    }
-    } catch (error) {
-        return {codigo:1,mensaje:error}
-    }     
-    }
+   
 }
 const dao= new ProductoDAO();
 export default dao;

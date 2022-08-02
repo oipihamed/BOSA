@@ -42,36 +42,43 @@
                         {{option.nombre}}
                       </mat-option>
                     </mat-autocomplete>-->
-                    <input id="categoria" type="checkbox" formControlName="categoria">
-                    <mat-select>
-                        <mat-option value=1>Equipo futbol</mat-option>
-                        <mat-option value=2>Zapatos</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="isValidField('categoria')">
+                    <mat-select matNativeControl formControlName="categoria">
+                        <mat-option [value]=0 disabled selected>Ninguno</mat-option>
+                        <mat-option [value]=1>Uniforme</mat-option>
+                        <mat-option [value]=2>Calzado</mat-option>
+                      </mat-select>                    
+                      <mat-error *ngIf="isValidField('categoria')">
                         {{ getErrorMessage('categoria') }}
                     </mat-error>
                 </mat-form-field>
                 <div>
                    
                 </div>
-
-              
             </div>
             <div class="col-6">
-                <div class="col-12">
-                    <input formControlName="rutaImagen" type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden>
-                    <img [src]=" photoSelected || '../../../../assets/images/SubirArch.webp'" alt="Sin imagen" class="imgR" (click)="photoInput.click()">
-                  
-                </div>
-                <div class="col-12">
-                    
-                    <img src="../../../../assets/images/SubirArch.webp" class="imgR">
-                </div>
-                <div class="col-12">
-                    
-                    <img src="../../../../assets/images/SubirArch.webp" class="imgR">
-                </div>
-                <button type="submit" class="bRegistrar" mat-raised-button color="warm" [disabled]="productoForm.invalid">Agregar</button>
+                <div *ngIf="photoSelected.length>0; then thenBlock else elseBlock"></div>
+                
+              
+<ng-template #thenBlock>
+    <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".jpg,.png" >
+    <div class="col-12" *ngFor="let item of photoSelected; let i = index" [attr.data-index]="i">
+        <img [src]=" item || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <div class="col-12" >
+        <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".png" >
+        <img [src]=" photoSelected[0] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+    </div>
+    <div class="col-12" >
+        <img [src]=" photoSelected[1] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+    </div>
+    <div class="col-12" >
+        <img [src]=" photoSelected[2] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+    </div>
+</ng-template>
+               
+    <button type="submit" class="bRegistrar" mat-raised-button color="warm" [disabled]="productoForm.invalid">Agregar</button>
             </div>
             </div>
             </form>

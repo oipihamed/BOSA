@@ -1,7 +1,7 @@
 import { ReadVarExpr } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
-import { ProductoService } from 'app/services/producto.service';
+import { ProductoService } from 'app/pages/admin/services/producto.service';
 import { Categoria } from 'app/shared/components/models/categoria.interface';
 import { Producto, ProductoResponse } from 'app/shared/components/models/producto.interface';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,7 +17,7 @@ interface HtmlInputEvent extends Event {
 })
 export class ProductosComponent implements OnInit {
   file: File | undefined;
-  photoSelected:   string | ArrayBuffer  | undefined;
+  photoSelected!: string[] & ArrayBuffer[];
   myControl = new FormControl<string | Categoria>('');
   options: Categoria[] = [{ nombre: 'Equipo de futbol' }, { nombre: 'Zapatos' }, { nombre: 'Accesorios' }];
   filteredOptions!: Observable<Categoria[]>;
@@ -31,6 +31,7 @@ export class ProductosComponent implements OnInit {
     rutaImagen:['',[Validators.required]]
   });
   constructor(private fb: FormBuilder, private productSvc: ProductoService, private spinner: NgxSpinnerService) {
+    this.photoSelected=[];
    }
 
 
@@ -40,7 +41,7 @@ export class ProductosComponent implements OnInit {
     
     //Obtener los datos del formulario
     const formValue = this.productoForm.value;
-    formValue.rutaImagen=this.file?.name;
+  
     this.spinner.show();
     this.productSvc.agregarProducto(formValue)
       .subscribe((producto: ProductoResponse | void) => {
@@ -51,21 +52,30 @@ export class ProductosComponent implements OnInit {
   }
 
   onPhotoSelected(event: Event): void {
-    
+    this.photoSelected=[];
     const target=event.target  as HTMLInputElement;
     if(event!=null){
     if (target!.files && target!.files[0]) {
-      this.file = <File>target!.files[0];
+      for (let i = 0; i < target!.files.length; i++) {
+        this.file = <File>target!.files[i];
       //Preview de la imagen
       const reader =new FileReader();
       reader.onload= (e) => {
          if(reader.result!=null){
-         this.photoSelected = reader.result;
-        return this.photoSelected;}else{
+         this.photoSelected.push(reader.result as string) ;
+         console.log(reader.result);
+      this.productoForm.patchValue({
+        rutaImagen:this.photoSelected.join('$$')
+      });
+        return this.photoSelected;
+      }else{
           return this.photoSelected;
         }
       };
-      reader.readAsDataURL(this.file);
+
+      reader.readAsDataURL(this.file);        
+      }
+      
  
     }
   }
