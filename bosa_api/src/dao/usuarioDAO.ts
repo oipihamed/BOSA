@@ -48,6 +48,23 @@ class UsuarioDAO {
     }
     }
 
+    public async getUserAdmin(){
+            const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                "Select * from tusuario tu INNER JOIN trol tr on tu.idRol = tr.idRol");
+        });
+        return result;
+    }
+
+    public async getOnlyUser(idUsuario: number){
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                "Select * from tusuario tu INNER JOIN trol tr on tu.idRol = tr.idRol WHERE tu.idUsuario = ?", [idUsuario]);
+        });
+        return result;
+    }
+
+
 }
 const dao = new UsuarioDAO();
 export default dao;

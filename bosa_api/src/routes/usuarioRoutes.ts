@@ -11,13 +11,19 @@ class UsuarioRoutes {
 
     private config() {
         //listado
-        this.router.get('/', /*[checkJwt],*/usuarioController.listar);
+        this.router.get('/', usuarioController.listar);
+
+        //Obtener uno
+        this.router.get('/:idUsuario', usuarioController.obtenerUno);
+
         //insercion
-        this.router.post('/', /*[checkJwt],*/usuarioController.insertar);
+        this.router.post('/', usuarioController.insertar);
+
         //actualizar
-        this.router.put('/', /*[checkJwt],*/usuarioController.actualizar);
+        this.router.put('/:idUsuario', usuarioController.actualizar);
+        
         //eliminar
-        this.router.delete('/', /*[checkJwt],*/usuarioController.eliminar);
+        this.router.delete('/:idUsuario', usuarioController.eliminar);
     }
 }
 
