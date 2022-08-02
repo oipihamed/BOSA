@@ -24,7 +24,8 @@ const routes:Routes=[
 { path: 'aProductos', loadChildren: () => import('./pages/admin/productos/productos.module').then(m => m.ProductosModule) },
 { path: 'pedidoAdmin', loadChildren: () => import('./pages/pedidos/pedido-admin/pedido-admin.module').then(m => m.PedidoAdminModule) },
 { path: 'signup', loadChildren: () => import('./pages/auth/signup/signup.module').then(m => m.SignupModule) },
-{ path: 'configCategorias', loadChildren: () => import('./pages/categorias/config-categorias/config-categorias.module').then(m => m.ConfigCategoriasModule) }
+{ path: 'configCategorias', loadChildren: () => import('./pages/categorias/config-categorias/config-categorias.module').then(m => m.ConfigCategoriasModule) },
+{ path: 'newpassword/:restore', loadChildren: () => import('./pages/auth/newpassword/newpassword.module').then(m => m.NewpasswordModule) },
 ];
 
 @NgModule({
