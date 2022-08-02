@@ -19,6 +19,17 @@ export class CategoriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarUnaCategoria();
+    this.listarCategorias();
+  }
+
+  listarCategorias(){
+    this.CategoriaService.listarCategorias().subscribe(
+      res=>{
+        console.log(res)
+        this.ListarCategoriass=<any>res;
+      },
+      err => console.log(err)
+    );
   }
 
   listarUnaCategoria(){

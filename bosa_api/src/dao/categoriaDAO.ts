@@ -18,7 +18,7 @@ class CategoriaDAO{
     public async getCategoria(idCategoria: number){
         const result = await pool.then(async(connection)=>{
             return await connection.query(
-                "SELECT * FROM ccategoria cc INNER JOIN tproducto tp on cc.idCategoria = tp.idCategoria INNER JOIN cimagen ci on tp.idProducto = ci.idProducto where cc.idCategoria = ? ", [idCategoria]
+                "SELECT * , cc.nombre as nombreCategoria FROM ccategoria cc INNER JOIN tproducto tp on cc.idCategoria = tp.idCategoria INNER JOIN cimagen ci on tp.idProducto = ci.idProducto where cc.idCategoria = ? ", [idCategoria]
             );
         });
         return result;

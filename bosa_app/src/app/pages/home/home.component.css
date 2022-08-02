@@ -1,0 +1,8 @@
+  
+  [class*="col-sm-"] {
+    float: left;
+  }
+
+  [class*="col-lg-"] {
+    float: left;
+  }

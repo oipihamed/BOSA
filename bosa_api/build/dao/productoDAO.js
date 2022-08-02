@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database/database"));
 class ProductoDAO {
     constructor() {
-        this.columnas = "(nombre,descripcion,cantidadExistencia,precio,estatus,idCategoria)";
+        this.columnas = "(nombre,descripcion,cantidadExistencia,precio,estatusOferta,idCategoria)";
         this.imagencol = "(rutaImagen,idProducto)";
         this.resultIm = false;
         this.sMensajeError = "";
@@ -29,6 +29,52 @@ class ProductoDAO {
             return result;
         });
     }
+    getAllProducts() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query("Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto");
+            }));
+            return result;
+        });
+    }
+    //Insertar Producto
+    addProduct(nombre, descripcion, cantidad, precio, categoria, rutaImagen) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                //var dirname=process.cwd();
+                //var dir=dirname.split('\\');
+                //dirname=dir.join('/');
+                const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                    return yield connection.query(`INSERT INTO tproducto ${this.columnas} values ('${nombre}','${descripcion}',${cantidad},${precio},1,${categoria})`);
+                }));
+                if (result.affectedRows != 0) {
+                    var query = `INSERT INTO cimagen ${this.imagencol} values `;
+                    var count = 0;
+                    rutaImagen.forEach(e => {
+                        query += `('${e}',${result.insertId}),`;
+                    });
+                    query = query.substring(0, query.length - 1);
+                    query += `;`;
+                    const resultImg = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                        return yield connection.query(query);
+                    }));
+                    if (resultImg.affectedRows != 0) {
+                        this.resultIm = true;
+                    }
+                }
+                if (this.resultIm) {
+                    return { codigo: 0, mensaje: "Insertado correctamente" };
+                }
+                else {
+                    return { codigo: 1, mensaje: "No se ha insertado" };
+                }
+            }
+            catch (error) {
+                return { codigo: 1, mensaje: error };
+            }
+        });
+    }
+    //Fin insertar producto
     //Para obtener todos los productos EN OFERTA
     getProductsOfer() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -47,25 +93,30 @@ class ProductoDAO {
             return result;
         });
     }
-    addProduct(nombre, descripcion, cantidad, precio, categoria, rutaImagen) {
+    //Eliminar producto
+    eliminar(idProducto) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query(" DELETE FROM tproducto WHERE idProducto = ? ", [idProducto]);
+            }));
+            return result;
+        });
+    }
+    //Actualizar producto
+    actualizar(producto, idProducto) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                    return yield connection.query(`INSERT INTO tproducto ${this.columnas} values ('${nombre}','${descripcion}',${cantidad},${precio},1,${categoria})`);
+                    return yield connection.query(
+                    // " UPDATE tproducto SET ? WHERE idProducto = ? ", [producto, idProducto]);
+                    "UPDATE tproducto SET ? where  idProducto = ?", [producto, idProducto]);
                 }));
+                console.log(result);
                 if (result.affectedRows != 0) {
-                    const resultImg = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                        return yield connection.query(`INSERT INTO cimagen ${this.imagencol} values ('${rutaImagen}',${result.insertId});`);
-                    }));
-                    if (resultImg.affectedRows != 0) {
-                        this.resultIm = true;
-                    }
-                }
-                if (this.resultIm) {
-                    return { codigo: 0, mensaje: "Insertado correctamente" };
+                    return { codigo: 0, mensaje: "Actualizado correctamente" };
                 }
                 else {
-                    return { codigo: 1, mensaje: "No se ha insertado" };
+                    return { codigo: 1, mensaje: "No se ha actualizado" };
                 }
             }
             catch (error) {

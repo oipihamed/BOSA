@@ -10,6 +10,8 @@ class ProductoRoutes {
     config() {
         //listado todos los productos
         this.router.get('/', /*[checkJwt],*/ productoController_1.productoController.listarProductos);
+        //listado todos los productos
+        this.router.get('/all', /*[checkJwt],*/ productoController_1.productoController.listarAllProductos);
         //listado todos los productos en Oferta
         this.router.get('/ofer', productoController_1.productoController.listarProductosOferta);
         //Listar 1 producto
@@ -19,7 +21,7 @@ class ProductoRoutes {
         //actualizar
         this.router.put('/', /*[checkJwt],*/ productoController_1.productoController.actualizar);
         //eliminar
-        this.router.delete('/', /*[checkJwt],*/ productoController_1.productoController.eliminar);
+        this.router.delete('/:idProducto', /*[checkJwt],*/ productoController_1.productoController.eliminar);
     }
 }
 const productoRoutes = new ProductoRoutes();

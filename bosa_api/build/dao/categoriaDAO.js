@@ -27,7 +27,7 @@ class CategoriaDAO {
     getCategoria(idCategoria) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query("SELECT * FROM ccategoria cc INNER JOIN tproducto tp on cc.idCategoria = tp.idCategoria INNER JOIN cimagen ci on tp.idProducto = ci.idProducto where cc.idCategoria = ? ", [idCategoria]);
+                return yield connection.query("SELECT * , cc.nombre as nombreCategoria FROM ccategoria cc INNER JOIN tproducto tp on cc.idCategoria = tp.idCategoria INNER JOIN cimagen ci on tp.idProducto = ci.idProducto where cc.idCategoria = ? ", [idCategoria]);
             }));
             return result;
         });

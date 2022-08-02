@@ -10,7 +10,7 @@
     </div>
 </div><br>
 <div class="container-fluid">
-    <div class="row">
+    <div>
         <div *ngFor="let Producto of ListarProductoss">
             <div class="col-sm-4">
                 <div class="form-group col">
@@ -56,7 +56,7 @@
     </div><br>
     
         <div class="container-fluid">
-            <div class="row">
+            <div>
                 <div *ngFor="let ProductosOferta of ListarProductosOferta">
                     <div class="col-sm-4">
                         <div class="form-group col">
@@ -77,13 +77,13 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-12 justify-content-center" style="text-align: center;">
-                    <a  href="#" >
-                        <button type="button" class="btn btn-secondary center-block">Ver más</button>
-                    </a> 
-                </div>
             </div>
+        </div>
+
+        <div class="col-12 justify-content-center" style="text-align: center;">
+            <a  href="#" >
+                <button type="button" class="btn btn-secondary center-block">Ver más</button>
+            </a> 
         </div>
     
 <!-- ***** Ofertas Ends ***** -->
@@ -107,7 +107,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="right-content">
-                    <div class="row">
+                    <div    >
                         <div *ngFor="let Categoria of ListarCategoriass">
                             <div class="col-lg-6">
                                 <div class="right-first-image">

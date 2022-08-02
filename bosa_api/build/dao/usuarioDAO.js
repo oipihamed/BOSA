@@ -61,6 +61,22 @@ class UsuarioDAO {
             }
         });
     }
+    getUserAdmin() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query("Select * from tusuario tu INNER JOIN trol tr on tu.idRol = tr.idRol");
+            }));
+            return result;
+        });
+    }
+    getOnlyUser(idUsuario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                return yield connection.query("Select * from tusuario tu INNER JOIN trol tr on tu.idRol = tr.idRol WHERE tu.idUsuario = ?", [idUsuario]);
+            }));
+            return result;
+        });
+    }
 }
 const dao = new UsuarioDAO();
 exports.default = dao;

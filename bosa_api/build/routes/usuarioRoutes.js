@@ -9,13 +9,15 @@ class UsuarioRoutes {
     }
     config() {
         //listado
-        this.router.get('/', /*[checkJwt],*/ usuarioController_1.usuarioController.listar);
+        this.router.get('/', usuarioController_1.usuarioController.listar);
+        //Obtener uno
+        this.router.get('/:idUsuario', usuarioController_1.usuarioController.obtenerUno);
         //insercion
-        this.router.post('/', /*[checkJwt],*/ usuarioController_1.usuarioController.insertar);
+        this.router.post('/', usuarioController_1.usuarioController.insertar);
         //actualizar
-        this.router.put('/', /*[checkJwt],*/ usuarioController_1.usuarioController.actualizar);
+        this.router.put('/:idUsuario', usuarioController_1.usuarioController.actualizar);
         //eliminar
-        this.router.delete('/', /*[checkJwt],*/ usuarioController_1.usuarioController.eliminar);
+        this.router.delete('/:idUsuario', usuarioController_1.usuarioController.eliminar);
     }
 }
 const usuarioRoutes = new UsuarioRoutes();

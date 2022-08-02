@@ -30,4 +30,5 @@ export interface Categoria{
   precio?:string;
   rutaImagen?:string;
   idProducto?:string;
+  nombreCategoria?:string;
 }
