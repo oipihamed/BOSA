@@ -17,21 +17,28 @@
                     <ul class="nav" >
                         <li class="scroll-to-section"><a routerLink="home" class="active">Inicio</a></li>
                         <li class="scroll-to-section"><a [routerLink]="'/categoria'">Categorias</a></li>
-                        <div *ngIf="isLogged; then thenBlock else elseBlock"></div>
+                        <ng-container *ngIf="isLogged; then thenBlock else elseBlock"></ng-container>
                         <ng-template #thenBlock>
                             <li class="scroll-to-section"><a href="#w">Historial</a></li>
-                             <li class="submenu">
+                            <ng-container *ngIf="isAdmin; then thenBlockA else elseBlockA"></ng-container>
+                            <ng-template #thenBlockA>
+                                <li class="submenu">
                                     <a >Administrador</a>
                                     <ul>
                                         <li class="scroll-to-section"><a routerLink="/admin/productList">Productos</a></li>
                                         <li class="scroll-to-section"><a routerLink="/admin/categorias">Categorias</a></li>
                                     </ul>
+                                    
                                 </li>
-                                
-                           
-                            <li class="scroll-to-section">
-                                <a (click)="onLogout()">Logout</a>
-                            </li>
+                                <li class="scroll-to-section">
+                                    <a (click)="onLogout()">Logout</a>
+                                </li>
+                            </ng-template>
+                            <ng-template #elseBlockA>
+                                <li class="scroll-to-section">
+                                    <a (click)="onLogout()">Logout</a>
+                                </li>
+                            </ng-template>
                         </ng-template>
                         <ng-template #elseBlock>
                             <li class="scroll-to-section">

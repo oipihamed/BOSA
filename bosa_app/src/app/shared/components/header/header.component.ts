@@ -10,11 +10,13 @@ import { Subject,takeUntil } from 'rxjs';
 export class HeaderComponent implements OnInit,OnDestroy {
   private destroy$ = new Subject<any>();
   isLogged = false;
-  
+  isAdmin=false;
   constructor(private authSvc: AuthService) { }
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.destroy$.next({});
+    this.destroy$.complete;
   }
+
 
   ngOnInit(): void {
     this.authSvc.token$
@@ -24,6 +26,15 @@ export class HeaderComponent implements OnInit,OnDestroy {
         this.isLogged = true;
       } else {
         this.isLogged = false;
+      }
+    });
+    this.authSvc.idRol$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe( (rol: string) => {
+      if (rol==="2") {
+        this.isAdmin = true;
+      } else {
+        this.isAdmin = false;
       }
     });
   }
