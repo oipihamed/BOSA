@@ -51,6 +51,22 @@ class ProductoController{
             return res.status(500).json({ message : `${error.message}` });
         }
     }
+     //listar un imagenes de un producto
+     public async listarImgProducto(req: Request, res: Response) {
+        try {
+            console.log("dentro de lista img");
+            // se obtienen los datos del body
+            const { idProducto } = req.params;
+            if(validator.isEmpty(idProducto.trim())){
+                return res.status(400)
+            }
+            const result = await dao.getAllImgPro(idProducto);
+            
+            res.json(result);
+        } catch (error: any) {
+            return res.status(500).json({ message : `${error.message}` });
+        }
+    }
 //Insertar productos
     public async insertarProducto(req: Request, res: Response) {
         try {
@@ -123,7 +139,7 @@ class ProductoController{
             respuestaBd= await dao.actualizar(newProduct, producto.idProducto)
             if(!validator.isEmpty(producto.rutaImagen.trim()) || producto.rutaImagen.includes('$$')){
             img=producto.rutaImagen.split('$$');
-             var rutasImagen: string[]=[];
+            var rutasImagen: string[]=[];
              //Cargar imagenes en servidor
              img.forEach((r: any) => {
                  rutasImagen.push(uploadImg(r));

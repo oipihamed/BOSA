@@ -69,16 +69,26 @@
     </div>
 </ng-template>
 <ng-template #elseBlock>
-    <div class="col-12" >
-        <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".png" >
-        <img [src]=" photosBD || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
-    </div>
-    <div class="col-12" >
-        <img [src]=" photoSelected[1] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
-    </div>
-    <div class="col-12" >
-        <img [src]=" photoSelected[2] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
-    </div>
+    <div *ngIf="photosBD.length>0; then thenP else elseP"></div>
+    <ng-template #thenP>
+        <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple accept=".png" >
+        <div class="col-12" *ngFor="let item of photosBD; let i = index" [attr.data-index]="i">
+            <img [src]=" '../../../../'+item.rutaImagen || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+        </div>
+    </ng-template>
+    <ng-template #elseP>
+        <div class="col-12" >
+            <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".png" >
+            <img [src]="  '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+        </div>
+        <div class="col-12" >
+            <img [src]="  '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+        </div>
+        <div class="col-12" >
+            <img [src]="'../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+        </div>
+    
+    </ng-template>
 </ng-template>
                
     <button type="submit" class="bRegistrar" mat-raised-button color="warm" [disabled]="productoForm.invalid">{{ titleButton }}</button>

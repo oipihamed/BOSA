@@ -18,6 +18,8 @@ class ProductoRoutes {
         this.router.get('/ofer', productoController.listarProductosOferta);
         //Listar 1 producto
         this.router.get('/:idProducto', productoController.listarProducto);
+        //Listar Imagene de un producto
+        this.router.get('/img/:idProducto', productoController.listarImgProducto);
 
         //insercion
         this.router.post('/', /*[checkJwt],*/productoController.insertarProducto);

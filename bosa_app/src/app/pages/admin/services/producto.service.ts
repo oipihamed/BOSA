@@ -34,6 +34,10 @@ export class ProductoService {
     return this.http.put<any>(`${ environment.API_URL }/producto`, producto)
     .pipe(catchError( (error) => this.handlerError(error)));
   }
+  getAllImgProduct(idProducto: string): Observable<any> {
+    return this.http.get<any>(`${ environment.API_URL }/producto/img/${idProducto}`)
+    .pipe(catchError( (error) => this.handlerError(error)));
+  }
 
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";

@@ -28,6 +28,19 @@ class ProductoDAO{
             return {"error":"error"}
         }
     }
+    public async getAllImgPro(idProducto:string){
+        try{
+        const result = await pool.then(async(connection)=>{
+            return await connection.query(
+                `SELECT rutaImagen FROM cimagen WHERE idProducto=? LIMIT 3`,[idProducto]
+            )
+        });
+        return result;
+    }catch(err){
+            console.log(err)
+            return {"error":"error"}
+        }
+    }
 //Insertar Producto
 public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:number,categoria:string,rutaImagen:string[]){
     try {

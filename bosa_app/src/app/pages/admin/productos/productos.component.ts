@@ -25,7 +25,7 @@ export class ProductosComponent implements OnInit,OnDestroy {
   actionTODO = Action.NEW;
   file: File | undefined;
   photoSelected!: string[] & ArrayBuffer[];
-  photosBD!:string;
+  photosBD!:any[];
   private destroy$ = new Subject<any>();
   titleButton = "Guardar";
 
@@ -45,6 +45,7 @@ export class ProductosComponent implements OnInit,OnDestroy {
     private productSvc: ProductoService,
     private spinner: NgxSpinnerService) {
     this.photoSelected=[];
+    this.photosBD=[];
    }
 
    ngOnDestroy(): void {
@@ -93,18 +94,44 @@ export class ProductosComponent implements OnInit,OnDestroy {
     if (this.data.producto.idProducto) {
       this.actionTODO = Action.EDIT;
       this.titleButton = "ACTUALIZAR";
-      this.photosBD="../../../../"+this.data.producto.rutaImagen;
-      console.log(this.photoSelected);
-      this.productoForm.patchValue({
-        idProducto: this.data?.producto.idProducto,
-        nombre: this.data?.producto.nombre,
-        descripcion: this.data?.producto.descripcion,
-        cantidad: this.data?.producto.cantidadExistencia,
-        precio: this.data?.producto.precio,
-        categoria: this.data?.producto.idCategoria,
-        rutaImagen:this.data?.producto.rutaImagen        
+      var result="";
+      this.productSvc.getAllImgProduct(this.data.producto.idProducto)
+      .subscribe( (res: any) => {
+        this.photosBD=res;   
+        if(this.photosBD.length>0){
+          this.photosBD.forEach(photo => {
+            result+=photo.rutaImagen+"$$";
+          });
+          result=result.substring(0,result.length-2);
+          console.log(result);
+        }
+        if(result.length>0){
+    
+          
+            this.productoForm.patchValue({
+              idProducto: this.data?.producto.idProducto,
+              nombre: this.data?.producto.nombre,
+              descripcion: this.data?.producto.descripcion,
+              cantidad: this.data?.producto.cantidadExistencia,
+              precio: this.data?.producto.precio,
+              categoria: this.data?.producto.idCategoria,
+              rutaImagen:result        
+            });
+        }else{
+          this.productoForm.patchValue({
+            idProducto: this.data?.producto.idProducto,
+            nombre: this.data?.producto.nombre,
+            descripcion: this.data?.producto.descripcion,
+            cantidad: this.data?.producto.cantidadExistencia,
+            precio: this.data?.producto.precio,
+            categoria: this.data?.producto.idCategoria,
+            rutaImagen:this.data?.producto.rutaImagen        
+          });
+        }
+           
       });
-      
+      console.log(this.photosBD);
+       console.log(this.productoForm);
       this.productoForm.updateValueAndValidity();
     } else {
       this.titleButton = "GUARDAR";
