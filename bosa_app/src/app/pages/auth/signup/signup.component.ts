@@ -15,19 +15,20 @@ import { RecoveryComponent } from '../recovery/recovery.component';
 export class SignupComponent implements OnInit {
 
   signupForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(1)]],
-    lastName: ['', [Validators.required, Validators.minLength(1)]],
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required, Validators.pattern("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,}$")]],
-    confirmPassword: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    name: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(20)]],
+    lastName: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(20)]],
+    username: ['', [Validators.required,Validators.maxLength(20),UsernameValidator.cannotContainSpace]],
+    password: ['', [Validators.required, Validators.pattern("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,}$"),Validators.maxLength(16),UsernameValidator.cannotContainSpace]],
+    confirmPassword: ['', [Validators.required,Validators.maxLength(16)]],
+    email: ['', [Validators.required, Validators.email,Validators.maxLength(40)]],
     street: ['', [Validators.required]],
     district: ['', [Validators.required]],
     state: ['', [Validators.required]],
-    city: ['', [Validators.required]],
-    zipcode: ['', [Validators.required]],
-    phone: ['', [Validators.required]]
-  }, { asyncValidator: UsernameValidator.checkPasswords('password', 'confirmPassword') });
+    city: ['', [Validators.required,Validators.maxLength(20),Validators.minLength(1)]],
+    zipcode: ['', [Validators.required,Validators.min(0)]],
+    phone: ['', [Validators.required,Validators.min(11)]]
+  }, {validator: this.checkIfMatchingPassword("password", "confirmPassword")// asyncValidator: UsernameValidator.checkPasswords('password', 'confirmPassword')
+ });
 
   constructor(private fb: FormBuilder, private userSvc: UserService, private spinner: NgxSpinnerService, public dialog: MatDialog) { }
 
@@ -62,9 +63,11 @@ export class SignupComponent implements OnInit {
       if (form.hasError("required")) {
         message = "Campo requerido";
       } else if (form.hasError("minlength")) {
-        message = "El minimo de caracteres son 5";
-      } else if (form.hasError("cannotContainSpace")) {
-        message = "El nombre de usuario no puede contener espacios";
+        message = "No tiene el minimo de caracteres necesario";
+      }else if (form.hasError("maxlength")) {
+        message = "Mas de los caracteres permitidos";
+      }  else if (form.hasError("cannotContainSpace")) {
+        message = "Este campo no puede contener espacios";
       } else if (form.hasError("notSame")) {
         message = "La contraseña no coincide"
       } else if ("pattern") {
@@ -84,12 +87,24 @@ export class SignupComponent implements OnInit {
     }
     return flag;
   }
+  checkIfMatchingPassword(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      let passwordInput = group.controls[passwordKey];
+      let passwordConfirmationInput = group.controls[passwordConfirmationKey];
 
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({ notSame: true})
+      } else {
+        return passwordConfirmationInput.setErrors(null);
+      }
+    }
+  }
 
 }
 
 export class UsernameValidator {
   static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
+    console.log(control.value)
     if ((control.value as string).indexOf(' ') >= 0) {
       return { cannotContainSpace: true }
     }
@@ -97,7 +112,7 @@ export class UsernameValidator {
     return null;
   }
   static checkPasswords(controlName: string, matchingControlName: string): ValidationErrors | null {
-    return async (formGroup: FormGroup) => {
+    return  async (formGroup: FormGroup) => {
 
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
@@ -108,6 +123,7 @@ export class UsernameValidator {
       }
 
     }
-
+    
   }
+ 
 }

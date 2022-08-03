@@ -31,7 +31,7 @@ export class ProductosComponent implements OnInit,OnDestroy {
   categorias:CategoriaResponse[]=[];
   productoForm = this.fb.group({
     idProducto:[''],
-    nombre: ['', [Validators.required, Validators.minLength(1)]],
+    nombre: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(20)]],
     descripcion: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
     precio: ['', [Validators.required, Validators.min(0)]],
     cantidad: ['', [Validators.required, Validators.min(0)]],
@@ -176,6 +176,8 @@ export class ProductosComponent implements OnInit,OnDestroy {
         message = "Campo requerido";
       } else if (form.hasError("minlength")) {
         message = "El minimo de caracteres son 5";
+      }else if (form.hasError("maxlength")) {
+        message = "Mas de los caracteres permitidos";
       } 
     }
     return message;
