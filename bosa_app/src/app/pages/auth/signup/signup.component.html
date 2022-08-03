@@ -1,0 +1,153 @@
+<!-- register.component.html -->
+<div class="row contenedorTitulo ">
+    <div class="col-3 col_Ti">
+        <h5><a class="tituloRI" href="/login">Iniciar de sesión</a></h5>
+
+
+    </div>
+    <div class="col-3 col_Ti active">
+        <h5><a class="tituloRI" href="/signup">Registro</a></h5>
+
+    </div>
+    <div class="col-6 col_Ti">
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-8">
+        <div class="register ">
+            <form #signUpForm="ngForm"  class="custom-form" [formGroup]="signupForm" (ngSubmit)="onSignUp(signUpForm)">
+                <div class="row mt-20 d-flex justify-content-between">
+                    <div class="col-12">
+                        <h5>Registro</h5>
+                        <hr>
+
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field apperance="outline">
+                            <input type="text" name="name" placeholder="Nombre" matInput formControlName="name" #name />
+                            <mat-error *ngIf="isValidField('name')">
+                                {{ getErrorMessage('name') }}
+                            </mat-error>
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="col-5 ">
+                        <mat-form-field apperance="outline">
+                            <input type="text" name="lastName" placeholder="Apellidos" matInput
+                                formControlName="lastName" #lastname />
+                            <mat-error *ngIf="isValidField('lastName')">
+                                {{ getErrorMessage('lastName')}}
+                            </mat-error>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-12">
+                        <mat-form-field apperance="outline">
+                            <input type="text" name="username" placeholder="Nombre de Usuario" matInput
+                                formControlName="username" #usename />
+                            <mat-error *ngIf="isValidField('username')">
+                                {{ getErrorMessage('username')}}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field apperance="outline">
+                            <input type="email" name="email" placeholder="Correo Electronico" matInput
+                                formControlName="email" #email />
+                            <mat-error *ngIf="isValidField('email')">
+                                {{ getErrorMessage('email')}}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field apperance="outline">
+                            <input type="password" name="password" placeholder="Contraseña" matInput
+                                formControlName="password" #password />
+
+                            <mat-error *ngIf="isValidField('password')">
+                                {{ getErrorMessage('password')}}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field apperance="outline">
+                            <input type="password" name="confirmPassword" placeholder="Repetir Contraseña" matInput
+                                formControlName="confirmPassword" #confirmPassword />
+                            <mat-error *ngIf="isValidField('confirmPassword')">
+                                {{ getErrorMessage('confirmPassword')}}
+                            </mat-error>
+                        </mat-form-field>
+                        
+                        <mat-form-field apperance="outline">
+                            <input type="text" name="street" placeholder="Calle" matInput formControlName="street"
+                                #street />
+                            <mat-error *ngIf="isValidField('street')">
+                                {{ getErrorMessage('street')}}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field apperance="outline">
+                            <input type="text" name="district" placeholder="Colonia" matInput formControlName="district"
+                                #district />
+                            <mat-error *ngIf="isValidField('district')">
+                                {{ getErrorMessage('district')}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field apperance="outline">
+                            <mat-label>Selecciona un estado</mat-label>
+                            <mat-select matNativeControl id="state" formControlName="state">
+                              <mat-option [value]=0 disabled selected>Ninguno</mat-option>
+                              <mat-option [value]=1>Guanajuato</mat-option>
+                              <mat-option [value]=2>Queretaro</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isValidField('state')">
+                                {{ getErrorMessage('state') }}
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field apperance="outline">
+                            <input type="text" name="city" placeholder="Ciudad" matInput formControlName="city" #city />
+                            <mat-error *ngIf="isValidField('city')">
+                                {{ getErrorMessage('city')}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field apperance="outline">
+                            <input type="number" name="zipcode" placeholder="Codigo postal" matInput
+                                formControlName="zipcode" #zipcode />
+                            <mat-error *ngIf="isValidField('zipcode')">
+                                {{ getErrorMessage('zipcode')}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field apperance="outline">
+                            <input type="number" name="phone" placeholder="(000)-000-0000" matInput
+                                formControlName="phone" #district />
+                            <mat-error *ngIf="isValidField('phone')">
+                                {{ getErrorMessage('phone')}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12" >
+                        <button [ngStyle]="{'background-color':!signupForm.invalid ? '#252525' : '#FF0000'}" class="bRegistrar" type="submit" 
+                            [disabled]="signupForm.invalid" >Registrarse</button>
+                    </div>
+                    <div class="col-md-12 col-lg-3 col-xl-3 col-12  col-sm-12">
+                        <a class="bCancelar">Cancelar</a>
+                    </div>
+                </div>
+                <hr>
+            </form>
+
+
+        </div>
+    </div>
+    <div class="col-4">
+        <hr>
+        <img src="../../../assets/images/fondo_uniforme.jpg" class="imgR">
+    </div>
+</div>

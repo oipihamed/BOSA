@@ -1,0 +1,38 @@
+<br><br><br><br><br>
+<h1 style="margin-left:47%; font-size:xx-large;"> <b>Usuarios</b></h1>
+<!--<button style="margin-left: 10%; margin-bottom: 2%;" (click)="onOpenModal();" mat-raised-button color="primary">Agregar Usuario</button>-->
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="row">#</th>
+        <th style="width: 10%;">Nombre(s)</th>
+        <th >Apellidos</th>
+        <th >Email</th>
+        <th >Calle</th>
+        <th >Colonia</th>
+        <th >Ciudad</th>
+        <th >Telefono</th>
+        <th >Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let usuarios of usuarios">
+        <th scope="row">{{ usuarios.idUsuario }}</th>
+        <th>{{ usuarios.nombres }}</th>
+        <th >{{ usuarios.apellidos }}</th>
+        <th >{{ usuarios.email }}</th>
+        <th >{{ usuarios.calle }}</th>
+        <th >{{ usuarios.colonia }}</th>
+        <th >{{ usuarios.ciudad }}</th>
+        <th >{{ usuarios.telefono }}</th>
+        <th > 
+<!--        <button mat-raised-button color="primary" style="margin: 2%;" (click)="onOpenModal(usuarios)">Actualizar</button> -->
+            <button mat-raised-button color="warm" (click)="onDelete(usuarios.idUsuario)">Eliminar</button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+
+  <br><br><br><br><br>
+
+  <br><br>

@@ -1,0 +1,53 @@
+<!-- ***** Categorias Start ***** -->
+<div class="main-banner" id="top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 justify-content-center" style="text-align: center;">
+                        <div class="section-heading">
+                            <h1><b>Todos los Productos</b></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="right-content">
+                    <div    >
+                        <div *ngFor="let Producto of ListarProductoss">
+                            <div class="col-lg-6">
+                                <div class="right-content">
+                                    <div>
+                                        <div class="col-lg-6">
+                                            <div class="right-first-image">
+                                                <div class="thumb">
+                                                    <img src="../../../{{Producto.rutaImagen}}" height="200">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="right-first-image"><br><br><br>
+                                                <div class="thumb">                                    
+                                                    <h1>{{Producto.nombre}}</h1>
+                                                </div>
+                                                <div class="thumb">                                    
+                                                    <h1>{{Producto.precio}}</h1>
+                                                </div>
+                                                <div class="right-content">
+                                                    <button (click)="direccionarDetalle(Producto.idProducto!)"><i class="fa fa-eye"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- ***** Categorias End ***** -->
+

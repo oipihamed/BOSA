@@ -1,0 +1,43 @@
+<div class="row contenedorTitulo ">
+    <div class="col-3 col_Ti">
+      <h5><a class="tituloRI" href="/login">Iniciar de sesión</a></h5>
+  
+  
+    </div>
+    <div class="col-3 col_Ti active">
+      <h5><a class="tituloRI" href="/signup">Registro</a></h5>
+  
+    </div>
+    <div class="col-6 col_Ti">
+  
+    </div>
+</div>
+  
+<div class="register">
+    <form class="custom-form" (submit)="login(email,password)" autocomplete="on">
+      <h1>Ingresar al sitio</h1>
+      <input
+        type="email"
+        name="email"
+        placeholder="Correo Electronico"
+        required="required"
+        #email
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Contraseña"
+        required="required"
+        #password
+      />
+      <div style="white-space:nowrap; position:initial;"> 
+        <input type="radio" id="rememberUser" name="rememberUser" value="true" style="display: inline-block;">
+        <label for="rememberUser" style="display: inline-block;"> Recordar usuario</label><br>
+      </div>
+      <a href="#">Recuperar contraseña</a>
+      <hr>
+      <button class="bRegistrar" type="submit">Ingresar</button>
+      <hr>
+      <button class="bCancelar" (click)="limpiarCampos()">Cancelar</button>
+    </form>
+  </div>

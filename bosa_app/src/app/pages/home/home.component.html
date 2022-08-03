@@ -1,0 +1,130 @@
+<!-- ***** Nuevos Productos Starts ***** -->
+<br><br><br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 justify-content-center" style="text-align: center;">
+            <div class="section-heading">
+                <h1><b>Nuevos Productos</b></h1>
+            </div>
+        </div>
+    </div>
+</div><br>
+<div class="container-fluid">
+    <div>
+        <div *ngFor="let Producto of ListarProductoss">
+            <div class="col-sm-4">
+                <div class="form-group col">
+                    <div class="item">
+                        <div class="thumb">
+                            <img src="../../../{{Producto.rutaImagen}}" height="400">
+                        </div>
+                        <div class="quantity-content">
+                            <div class="left-content">
+                                <h4>{{Producto.nombre}}</h4>
+                                <span>$ {{Producto.precio}}</span>
+                            </div>
+                            <div class="right-content">
+                                <button (click)="direccionarDetalle(Producto.idProducto!)"><i class="fa fa-eye"></i></button>
+                            </div>
+                        </div>  
+                    <div>                  
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+
+<!-- ***** Nuevos Productos Ends ***** -->
+
+<!-- ***** Ofertas Starts ***** -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 justify-content-center" style="text-align: center;">
+            <div class="section-heading">
+                <h1><b>Ofertas</b></h1>
+            </div>
+        </div>
+    </div>
+</div><br>
+    
+        <div class="container-fluid">
+            <div>
+                <div *ngFor="let ProductosOferta of ListarProductosOferta">
+                    <div class="col-sm-4">
+                        <div class="form-group col">
+                            <div class="item">
+                                <div class="thumb">
+                                    <img src="../../../{{ProductosOferta.rutaImagen}}" height="400">
+                                </div>
+                                <div class="quantity-content">
+                                    <div class="left-content">
+                                        <h4>{{ProductosOferta.nombre}}</h4>
+                                        <span>$ {{ProductosOferta.precio}}</span>
+                                    </div>
+                                    <div class="right-content">
+                                        <button (click)="direccionarDetalle(ProductosOferta.idProducto!)"><i class="fa fa-eye"></i></button>
+                                    </div>
+                                </div>  
+                            <div>                  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+
+    
+<!-- ***** Ofertas Ends ***** -->
+
+
+<!-- ***** Categorias Start ***** -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 justify-content-center" style="text-align: center;">
+            <div class="section-heading">
+                <h1><b></b></h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-banner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="left-content">
+                    <div class="thumb">
+                        <div class="inner-content">
+                            <h4>Todos los Productos</h4>
+                            <div class="main-border-button">
+                                <button (click)="direccionarAllProducts()">Ver Más!</button>
+                            </div>
+                        </div>
+                        <img src="../../../assets/images/imagen_ejemplo2.jpg" alt="500px">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="right-content">
+                    <div    >
+                        <div *ngFor="let Categoria of ListarCategoriass">
+                            <div class="col-lg-6">
+                                <div class="right-first-image">
+                                    <div class="thumb">
+                                        <div class="inner-content">
+                                            <h4>{{Categoria.nombre}}</h4>
+                                            <div class="main-border-button">
+                                                <button (click)="direccionarCategoria(Categoria.idCategoria!)">Ver Más!</button>
+                                            </div>
+                                        </div>
+                                        <img src="../../../assets/images/imagen_ejemplo2.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ***** Categorias End ***** -->
