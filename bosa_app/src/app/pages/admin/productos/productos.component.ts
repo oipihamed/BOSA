@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductoService } from 'app/pages/admin/services/producto.service';
-import { Categoria } from 'app/shared/components/models/categoria.interface';
+import { Categoria, CategoriaResponse } from 'app/shared/components/models/categoria.interface';
 import { Producto, ProductoResponse } from 'app/shared/components/models/producto.interface';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
@@ -28,7 +28,7 @@ export class ProductosComponent implements OnInit,OnDestroy {
   photosBD!:any[];
   private destroy$ = new Subject<any>();
   titleButton = "Guardar";
-
+  categorias:CategoriaResponse[]=[];
   productoForm = this.fb.group({
     idProducto:[''],
     nombre: ['', [Validators.required, Validators.minLength(1)]],
@@ -194,7 +194,11 @@ export class ProductosComponent implements OnInit,OnDestroy {
 
 
   ngOnInit(): void {
-    this.patchData();
+    this.productSvc.getCategorias().pipe(takeUntil(this.destroy$))
+    .subscribe( (categoria: CategoriaResponse[]) => {
+      this.categorias = categoria;
+      this.patchData();
+    });
   }
   
 }

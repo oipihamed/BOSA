@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CategoriaResponse } from 'app/shared/components/models/categoria.interface';
 import { Producto, ProductoResponse } from 'app/shared/components/models/producto.interface';
 import { environment } from 'environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -38,7 +39,10 @@ export class ProductoService {
     return this.http.get<any>(`${ environment.API_URL }/producto/img/${idProducto}`)
     .pipe(catchError( (error) => this.handlerError(error)));
   }
-
+getCategorias():Observable<CategoriaResponse[]> {
+  return this.http.get<CategoriaResponse[]>(`${environment.API_URL}/categoria`)
+  .pipe(catchError( (error) => this.handlerError(error) ));
+}
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";
     if(error){

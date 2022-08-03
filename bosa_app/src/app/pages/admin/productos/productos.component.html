@@ -45,11 +45,31 @@
                         {{option.nombre}}
                       </mat-option>
                     </mat-autocomplete>-->
+                    <div *ngIf="categorias.length>0; then thenC else elseC"></div>
+                    <ng-template #thenC>
                     <mat-select matNativeControl formControlName="categoria">
-                        <mat-option [value]=0 disabled selected>Ninguno</mat-option>
-                        <mat-option [value]=1>Uniforme</mat-option>
-                        <mat-option [value]=2>Calzado</mat-option>
-                      </mat-select>                    
+                        
+                       
+                        <mat-option  [value]=0 selected>Ninguno</mat-option>
+                        <mat-option *ngFor="let item of categorias; let i = index" [attr.data-index]="i"  [value]="item.idCategoria" selected>{{item.nombre}}</mat-option>
+                        
+                    
+                 
+                      </mat-select> 
+                    </ng-template>      
+                      <ng-template #elseC>
+                       
+                        <mat-select matNativeControl formControlName="categoria">
+                        
+                       
+                            <mat-option  [value]=0 selected>Ninguno</mat-option>
+                            <mat-option [value]=1>Uniforme</mat-option>
+                            <mat-option [value]=2>Calzado</mat-option>
+                        
+                     
+                          </mat-select> 
+                        
+                      </ng-template>             
                       <mat-error *ngIf="isValidField('categoria')">
                         {{ getErrorMessage('categoria') }}
                     </mat-error>

@@ -20,7 +20,7 @@ class ProductoDAO{
         try{
         const result = await pool.then(async(connection)=>{
             return await connection.query(
-                "Select idProducto,nombre,descripcion,cantidadExistencia,precio,estatusOferta,idCategoria,(select rutaImagen from cimagen c where c.idProducto=tp.idProducto LIMIT 1) as rutaImagen from tproducto tp"
+                "Select idProducto,tp.nombre,tp.descripcion,cantidadExistencia,precio,estatusOferta,cc.nombre as nombreCategoria,tp.idCategoria,(select rutaImagen from cimagen c where c.idProducto=tp.idProducto LIMIT 1) as rutaImagen from tproducto tp INNER JOIN ccategoria cc on tp.idCategoria=cc.idCategoria"
             )
         });
         return result;}catch(err){
