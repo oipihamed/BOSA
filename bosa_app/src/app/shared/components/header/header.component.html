@@ -20,7 +20,7 @@
                         <ng-container *ngIf="isLogged; then thenBlock else elseBlock"></ng-container>
                         <ng-template #thenBlock>
                             <li class="scroll-to-section"><a href="#w">Historial</a></li>
-                            <ng-container *ngIf="!isAdmin; then thenBlockA else elseBlockA"></ng-container>
+                            <ng-container *ngIf="isAdmin; then thenBlockA else elseBlockA"></ng-container>
                             <ng-template #thenBlockA>
                                 <li class="submenu">
                                     <a >Administrador</a>
