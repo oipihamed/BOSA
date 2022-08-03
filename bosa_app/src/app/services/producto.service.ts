@@ -16,6 +16,7 @@ export class ProductoService {
   listarProductos(){
     return  this.http.get(`${ environment.API_URL }/producto`)
   }
+  
   listarAllProductos(){
     return  this.http.get(`${ environment.API_URL }/producto/all`)
   }

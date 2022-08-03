@@ -31,10 +31,16 @@ class ProductoDAO {
     }
     getAllProducts() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
-                return yield connection.query("Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto");
-            }));
-            return result;
+            try {
+                const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                    return yield connection.query("Select idProducto,nombre,descripcion,cantidadExistencia,precio,estatusOferta,idCategoria,(select rutaImagen from cimagen c where c.idProducto=tp.idProducto LIMIT 1) as rutaImagen from tproducto tp");
+                }));
+                return result;
+            }
+            catch (err) {
+                console.log(err);
+                return { "error": "error" };
+            }
         });
     }
     //Insertar Producto
@@ -49,7 +55,6 @@ class ProductoDAO {
                 }));
                 if (result.affectedRows != 0) {
                     var query = `INSERT INTO cimagen ${this.imagencol} values `;
-                    var count = 0;
                     rutaImagen.forEach(e => {
                         query += `('${e}',${result.insertId}),`;
                     });
@@ -106,14 +111,47 @@ class ProductoDAO {
     actualizar(producto, idProducto) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(producto);
                 const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
                     return yield connection.query(
                     // " UPDATE tproducto SET ? WHERE idProducto = ? ", [producto, idProducto]);
                     "UPDATE tproducto SET ? where  idProducto = ?", [producto, idProducto]);
                 }));
-                console.log(result);
                 if (result.affectedRows != 0) {
                     return { codigo: 0, mensaje: "Actualizado correctamente" };
+                }
+                else {
+                    return { codigo: 1, mensaje: "No se ha actualizado" };
+                }
+            }
+            catch (error) {
+                return { codigo: 1, mensaje: error };
+            }
+        });
+    }
+    actualizarImagen(rutaImagen, idProducto) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                var query = `INSERT INTO cimagen ${this.imagencol} values `;
+                rutaImagen.forEach(e => {
+                    query += `('${e}',${idProducto}),`;
+                });
+                query = query.substring(0, query.length - 1);
+                query += `;`;
+                console.log(query);
+                const resultDel = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                    return yield connection.query(" DELETE FROM cimagen WHERE idProducto = ? ", [idProducto]);
+                }));
+                if (resultDel.affectedRows != 0) {
+                    const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
+                        return yield connection.query(query);
+                    }));
+                    if (result.affectedRows != 0) {
+                        return { codigo: 0, mensaje: "Actualizado correctamente" };
+                    }
+                    else {
+                        return { codigo: 1, mensaje: "No se ha actualizado" };
+                    }
                 }
                 else {
                     return { codigo: 1, mensaje: "No se ha actualizado" };

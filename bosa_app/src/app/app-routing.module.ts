@@ -28,6 +28,7 @@ const routes:Routes=[
 { path: 'configCategorias', loadChildren: () => import('./pages/categorias/config-categorias/config-categorias.module').then(m => m.ConfigCategoriasModule) },
 { path: 'newpassword/:restore', loadChildren: () => import('./pages/auth/newpassword/newpassword.module').then(m => m.NewpasswordModule) },
 { path: 'usuarios', loadChildren: () => import('./pages/admin/usuarios/usuarios.module').then(m => m.UsuariosModule), canActivate: [CheckSessionGuard] },
+{ path: 'productoGeneral', loadChildren: () => import('./pages/categorias/producto-general/producto-general.module').then(m => m.ProductoGeneralModule) }
 ];
 
 @NgModule({

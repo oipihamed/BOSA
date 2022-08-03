@@ -19,7 +19,6 @@ export class CategoriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarUnaCategoria();
-    this.listarCategorias();
   }
 
   listarCategorias(){

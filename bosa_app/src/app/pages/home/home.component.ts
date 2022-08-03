@@ -64,6 +64,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/categoria/'+id]);
   }
 
+  direccionarAllProducts(){
+    this.router.navigate(['/productoGeneral']);
+  }
   
 
 }

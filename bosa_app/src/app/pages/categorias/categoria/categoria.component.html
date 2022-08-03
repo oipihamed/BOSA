@@ -77,9 +77,9 @@
 
 
 <br>
-<div class="main-banner" style="padding-top: 0;">
-    <div class="container-fluid">
-        <div>
+<div class="col-lg-12">
+    <div class="right-content">
+        <div    >
             <div *ngFor="let Categoria of ListarCategoriass">
                 <div class="col-lg-6">
                     <div class="right-content">
@@ -97,7 +97,7 @@
                                         <h1>{{Categoria.nombre}}</h1>
                                     </div>
                                     <div class="thumb">                                    
-                                        <h1>{{Categoria.precio}}</h1>
+                                        <h1>$ {{Categoria.precio}}</h1>
                                     </div>
                                     <div class="right-content">
                                         <button (click)="direccionarDetalle(Categoria.idProducto!)"><i class="fa fa-eye"></i></button>
@@ -112,7 +112,7 @@
     </div>
 </div><br><br>
 
-<div class="col-12 justify-content-center" style="text-align: center;">
+<div>
     s
-</div><br>
+</div>
 <!-- ***** Categorias End ***** -->

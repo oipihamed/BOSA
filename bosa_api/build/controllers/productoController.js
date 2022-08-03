@@ -120,6 +120,7 @@ class ProductoController {
             try {
                 // se obtienen los datos del body
                 var producto = req.body;
+                var img = [];
                 // validar que los datos no sean nulos o indefinidos
                 if (!producto.idProducto
                     || !producto.nombre
@@ -143,15 +144,33 @@ class ProductoController {
                     cantidadExistencia: producto.cantidadExostencia,
                     idCategoria: producto.categoria
                 };
+                var respuestaBd;
+                respuestaBd = yield productoDAO_1.default.actualizar(newProduct, producto.idProducto);
+                if (!validator_1.default.isEmpty(producto.rutaImagen.trim()) || producto.rutaImagen.includes('$$')) {
+                    img = producto.rutaImagen.split('$$');
+                    var rutasImagen = [];
+                    //Cargar imagenes en servidor
+                    img.forEach((r) => {
+                        rutasImagen.push(uploadImg(r));
+                    });
+                    if (!rutasImagen.includes("0")) {
+                        respuestaBd = yield productoDAO_1.default.actualizarImagen(rutasImagen, producto.idProducto);
+                    }
+                }
                 // actualización de los datos
-                const respuestaBd = yield productoDAO_1.default.actualizar(newProduct, producto.idProducto);
-                if (respuestaBd.codigo == 0) {
-                    console.log(respuestaBd.mensaje);
-                    return res.json({ message: respuestaBd.mensaje, code: respuestaBd.codigo });
+                // respuestaBd = await dao.actualizar(newProduct, producto.idProducto);
+                if (respuestaBd != null) {
+                    if (respuestaBd.codigo == 0) {
+                        console.log(respuestaBd.mensaje);
+                        return res.json({ message: respuestaBd.mensaje, code: respuestaBd.codigo });
+                    }
+                    else {
+                        console.log(respuestaBd.mensaje);
+                        return res.status(404).json({ message: respuestaBd.mensaje, code: respuestaBd.codigo });
+                    }
                 }
                 else {
-                    console.log(respuestaBd.mensaje);
-                    return res.status(404).json({ message: respuestaBd.mensaje, code: respuestaBd.codigo });
+                    return res.status(404).json({ message: "No se ha realizado la peticion a la Base de datos", code: 1 });
                 }
             }
             catch (error) {
@@ -194,31 +213,40 @@ function decodeBase64Image(dataString) {
     return response;
 }
 function uploadImg(rutaImagen) {
-    var base64DataD = rutaImagen.replace(/^data:image\/png;base64,/, "");
-    // Regular expression for image type:
-    // This regular image extracts the "jpeg" from "image/jpeg"
-    var imageTypeRegularExpression = /\/(.*?)$/;
-    // Generate random string
-    var crypto = require('crypto');
-    var seed = crypto.randomBytes(20);
-    var uniqueSHA1String = crypto
-        .createHash('sha1')
-        .update(seed)
-        .digest('hex');
-    var base64Data = 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAZABkAAD/4Q3zaHR0cDovL25zLmFkb2JlLmN...';
-    var imageBuffer = decodeBase64Image(base64Data);
-    var userUploadedFeedMessagesLocation = '../bosa_app/src/assets/images/';
-    var uniqueRandomImageName = 'image-' + uniqueSHA1String;
-    // This variable is actually an array which has 5 values,
-    // The [1] value is the real image extension
-    var imageTypeDetected = imageBuffer.type
-        .match(imageTypeRegularExpression);
-    var userUploadedImagePath = userUploadedFeedMessagesLocation +
-        uniqueRandomImageName +
-        '.' +
-        imageTypeDetected[1];
-    require("fs").writeFile(userUploadedImagePath, base64DataD, 'base64', function (err) {
-    });
-    return "assets/images/" + uniqueRandomImageName + ".jpg";
+    try {
+        console.log(rutaImagen.includes("assets/images/"));
+        if (rutaImagen.includes("assets/images/")) {
+            return rutaImagen;
+        }
+        var base64DataD = rutaImagen.replace(/^data:image\/png;base64,/, "");
+        // Regular expression for image type:
+        // This regular image extracts the "jpeg" from "image/jpeg"
+        var imageTypeRegularExpression = /\/(.*?)$/;
+        // Generate random string
+        var crypto = require('crypto');
+        var seed = crypto.randomBytes(20);
+        var uniqueSHA1String = crypto
+            .createHash('sha1')
+            .update(seed)
+            .digest('hex');
+        var base64Data = 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAZABkAAD/4Q3zaHR0cDovL25zLmFkb2JlLmN...';
+        var imageBuffer = decodeBase64Image(base64Data);
+        var userUploadedFeedMessagesLocation = '../bosa_app/src/assets/images/';
+        var uniqueRandomImageName = 'image-' + uniqueSHA1String;
+        // This variable is actually an array which has 5 values,
+        // The [1] value is the real image extension
+        var imageTypeDetected = imageBuffer.type
+            .match(imageTypeRegularExpression);
+        var userUploadedImagePath = userUploadedFeedMessagesLocation +
+            uniqueRandomImageName +
+            '.' +
+            imageTypeDetected[1];
+        require("fs").writeFile(userUploadedImagePath, base64DataD, 'base64', function (err) {
+        });
+        return "assets/images/" + uniqueRandomImageName + ".jpg";
+    }
+    catch (err) {
+        return "0";
+    }
 }
 exports.productoController = new ProductoController();
