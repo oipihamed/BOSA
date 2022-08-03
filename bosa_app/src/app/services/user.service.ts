@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { User, UserResponse } from 'app/shared/components/models/user.interface';
+import { User, UserResponse, UserSignUp } from 'app/shared/components/models/user.interface';
 import { environment } from 'environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
@@ -31,6 +31,28 @@ export class UserService {
       }),
       catchError((error) => this.handlerError(error)));
   }
+
+  getUsuarioList() {
+    return this.http.get(`${ environment.API_URL }/user/`);
+  } 
+
+  getUsuarioById(idUsuario: number) {
+    return this.http.get(`${ environment.API_URL }/user/${idUsuario}`);
+  }
+
+  deleteUsuario(idUsuario: number){
+    return this.http.delete(`${ environment.API_URL }/user/${idUsuario}`);
+  }
+
+/*  saveUsuario(usuario: UserSignUp){
+    return this.http.post(`${ environment.API_URL }/user/`, usuario);
+  }
+
+
+  updateUsuario(idUsuario: number, usuario: UserSignUp): Observable<any> {
+    return this.http.put(`${ environment.API_URL  }/user/${idUsuario}`, usuario);
+  }
+*/
   handlerError(error: any): Observable<never> { 
     let errorMessage = "Ocurrio un error";
     if(error){

@@ -5,7 +5,6 @@ import { AdminComponent } from './admin.component';
 const routes: Routes = [{ 
   path: '', component: AdminComponent }, 
   { path: 'productList', loadChildren: () => import('./productos-list/productos-list.module').then(m => m.ProductosListModule) },
-
 ];
 
 @NgModule({
