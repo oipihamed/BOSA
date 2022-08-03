@@ -1,7 +1,7 @@
 import { Request , Response} from 'express';
 import dao from '../dao/productoDAO';
 import validator from 'validator';
-
+import fs from 'fs';
 class ProductoController{
      //listar tres productos
     public async listarProductos(req: Request, res: Response) {
@@ -94,7 +94,7 @@ class ProductoController{
             
             // se obtienen los datos del body
             var producto = req.body;
-           
+           var img=[];
             // validar que los datos no sean nulos o indefinidos
             if (!producto.idProducto
                 || !producto.nombre
@@ -119,8 +119,23 @@ class ProductoController{
                 cantidadExistencia: producto.cantidadExostencia,
                 idCategoria:producto.categoria
             }
+            var respuestaBd;
+            respuestaBd= await dao.actualizar(newProduct, producto.idProducto)
+            if(!validator.isEmpty(producto.rutaImagen.trim()) || producto.rutaImagen.includes('$$')){
+            img=producto.rutaImagen.split('$$');
+             var rutasImagen: string[]=[];
+             //Cargar imagenes en servidor
+             img.forEach((r: any) => {
+                 rutasImagen.push(uploadImg(r));
+             });
+             if(!rutasImagen.includes("0")){
+                respuestaBd= await dao.actualizarImagen(rutasImagen, producto.idProducto) 
+             }
+            }
+           
             // actualización de los datos
-            const respuestaBd = await dao.actualizar(newProduct, producto.idProducto);
+            // respuestaBd = await dao.actualizar(newProduct, producto.idProducto);
+            if(respuestaBd!=null){
             if (respuestaBd.codigo==0 ) {
                 console.log(respuestaBd.mensaje);
                     return res.json ({ message:respuestaBd.mensaje, code:respuestaBd.codigo});
@@ -128,7 +143,9 @@ class ProductoController{
                     console.log(respuestaBd.mensaje);
                     return res.status(404).json({message:respuestaBd.mensaje,code:respuestaBd.codigo});
                 }
-
+            }else{
+                return res.status(404).json({message:"No se ha realizado la peticion a la Base de datos",code:1});
+            }
         } catch (error: any) {
             return res.status(500).json({ message : `${error.message}` });
         }
@@ -171,6 +188,13 @@ function decodeBase64Image(dataString: string)
   return response;
 }
 function uploadImg(rutaImagen:string) {
+    try{
+console.log(       rutaImagen.includes("assets/images/"))
+            if (rutaImagen.includes("assets/images/")) {
+                return rutaImagen
+            } 
+        
+        
     var base64DataD = rutaImagen.replace(/^data:image\/png;base64,/, "");
             // Regular expression for image type:
            // This regular image extracts the "jpeg" from "image/jpeg"
@@ -205,5 +229,8 @@ function uploadImg(rutaImagen:string) {
               
            });
   return  "assets/images/"+uniqueRandomImageName+".jpg";
+}catch (err){
+return "0";
+}
 }
 export const productoController = new ProductoController();

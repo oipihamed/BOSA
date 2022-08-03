@@ -71,7 +71,7 @@
 <ng-template #elseBlock>
     <div class="col-12" >
         <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".png" >
-        <img [src]=" photoSelected[0] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+        <img [src]=" photosBD || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
     </div>
     <div class="col-12" >
         <img [src]=" photoSelected[1] || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">

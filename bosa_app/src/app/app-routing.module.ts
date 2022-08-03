@@ -18,7 +18,7 @@ const routes:Routes=[
 { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
 { path: 'producto', loadChildren: () => import('./pages/admin/productos/productos.module').then(m => m.ProductosModule), canActivate: [CheckSessionGuard]},
 { path: 'notFound', loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule) },
-{ path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule), canActivate: [CheckSessionGuard,CheckRolGuard] },
+{ path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule), canActivate: [CheckSessionGuard] },
 { path: 'login', loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule),canActivate: [CheckLoginGuard] },
 { path: 'accountRecovery', loadChildren: () => import('./pages/auth/recovery/recovery.module').then(m => m.RecoveryModule) },
 { path: 'categoria/:id', loadChildren: () => import('./pages/categorias/categoria/categoria.module').then(m => m.CategoriaModule) },

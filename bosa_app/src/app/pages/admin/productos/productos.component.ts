@@ -25,6 +25,7 @@ export class ProductosComponent implements OnInit,OnDestroy {
   actionTODO = Action.NEW;
   file: File | undefined;
   photoSelected!: string[] & ArrayBuffer[];
+  photosBD!:string;
   private destroy$ = new Subject<any>();
   titleButton = "Guardar";
 
@@ -92,13 +93,16 @@ export class ProductosComponent implements OnInit,OnDestroy {
     if (this.data.producto.idProducto) {
       this.actionTODO = Action.EDIT;
       this.titleButton = "ACTUALIZAR";
+      this.photosBD="../../../../"+this.data.producto.rutaImagen;
+      console.log(this.photoSelected);
       this.productoForm.patchValue({
         idProducto: this.data?.producto.idProducto,
         nombre: this.data?.producto.nombre,
         descripcion: this.data?.producto.descripcion,
         cantidad: this.data?.producto.cantidadExistencia,
         precio: this.data?.producto.precio,
-        categoria: this.data?.producto.idCategoria
+        categoria: this.data?.producto.idCategoria,
+        rutaImagen:this.data?.producto.rutaImagen        
       });
       
       this.productoForm.updateValueAndValidity();

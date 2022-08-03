@@ -1,4 +1,4 @@
-import { query } from 'express';
+import e, { query } from 'express';
 import { Connection } from 'promise-mysql';
 import pool from '../database/database';
 class ProductoDAO{
@@ -17,12 +17,16 @@ class ProductoDAO{
         return result;
     }
     public async getAllProducts(){
+        try{
         const result = await pool.then(async(connection)=>{
             return await connection.query(
-                "Select * from tproducto tp INNER JOIN cimagen ci on tp.idProducto = ci.idProducto"
+                "Select idProducto,nombre,descripcion,cantidadExistencia,precio,estatusOferta,idCategoria,(select rutaImagen from cimagen c where c.idProducto=tp.idProducto LIMIT 1) as rutaImagen from tproducto tp"
             )
         });
-        return result;
+        return result;}catch(err){
+            console.log(err)
+            return {"error":"error"}
+        }
     }
 //Insertar Producto
 public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:number,categoria:string,rutaImagen:string[]){
@@ -38,7 +42,6 @@ public async addProduct(nombre:string,descripcion:string,cantidad:number,precio:
         });
        if(result.affectedRows!=0){
         var query=`INSERT INTO cimagen ${this.imagencol} values `;
-        var count=0;
         rutaImagen.forEach(e => {
             query+=`('${e}',${result.insertId}),`
              });
@@ -92,12 +95,12 @@ public async eliminar(idProducto: number) {
   //Actualizar producto
   public async actualizar(producto: any, idProducto: number) {
     try {
+        console.log(producto);
     const result = await pool.then( async (connection) => {
         return await connection.query(
            // " UPDATE tproducto SET ? WHERE idProducto = ? ", [producto, idProducto]);
           "UPDATE tproducto SET ? where  idProducto = ?",[producto,idProducto]);
     });
-    console.log(result);
     if(result.affectedRows!=0){
         return {codigo:0,mensaje:"Actualizado correctamente"}
     }else{
@@ -108,6 +111,37 @@ public async eliminar(idProducto: number) {
         return {codigo:1,mensaje:error}
     }
 } 
+public async actualizarImagen(rutaImagen: string[], idProducto: number) {
+    try {
+        var query=`INSERT INTO cimagen ${this.imagencol} values `;
+        rutaImagen.forEach(e => {
+            query+=`('${e}',${idProducto}),`
+             });
+             query=query.substring(0, query.length - 1);
+             query+=`;`;
+             console.log(query);
+             const resultDel=await pool.then(async(connection)=>{
+                return await connection.query(" DELETE FROM cimagen WHERE idProducto = ? ", [idProducto]);
+             });
+             if(resultDel.affectedRows!=0){
+         const result=await pool.then(async(connection)=>{
+                    return await connection.query(query
+                   );
+                });
+                if(result.affectedRows!=0){
+                    return {codigo:0,mensaje:"Actualizado correctamente"}
+                }else{
+                    return  {codigo:1,mensaje:"No se ha actualizado"}
+                }
+            }else{
+                return  {codigo:1,mensaje:"No se ha actualizado"}
+            }
+    
+}catch(error)
+    {
+        return {codigo:1,mensaje:error}
+    }
+}
 }
 const dao= new ProductoDAO();
 export default dao;
