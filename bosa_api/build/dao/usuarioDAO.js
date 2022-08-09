@@ -16,7 +16,7 @@ const database_1 = __importDefault(require("../database/database"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class UsuarioDAO {
     constructor() {
-        this.columnas = "(nombres,apellidos,username,password,email,fechaRegistro,calle,colonia,ciudad,telefono,idRol)";
+        this.columnas = "(nombres,apellidos,username,password,email,calle,colonia,ciudad,telefono,idRol)";
     }
     signUpUser(name, lastName, username, email, password, street, district, state, city, zipcode, phone) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -39,9 +39,10 @@ class UsuarioDAO {
                     return { mensaje: "Username o email no disponibles", code: 1 };
                 const result = yield database_1.default.then((connection) => __awaiter(this, void 0, void 0, function* () {
                     let passwordHash = yield bcryptjs_1.default.hash(password, 8);
+                    console.log(`INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${passwordHash}','${email}','${street}','${district}','${city}','${phone}',1)`);
                     return yield connection.query(
                     //                `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${password}','${email}','${now.toLocaleDateString()}','${street}','${district}','${state}','${city}','${zipcode}','${phone}',1)`
-                    `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${passwordHash}','${email}','${now.toLocaleDateString()}','${street}','${district}','${city}','${phone}',1)`);
+                    `INSERT INTO tusuario ${this.columnas} values ('${name}','${lastName}','${username}','${passwordHash}','${email}','${street}','${district}','${city}','${phone}',1)`);
                 }));
                 if (result.affectedRows != 0) {
                     // const user = await pool.then(async (connection) => {
@@ -57,6 +58,7 @@ class UsuarioDAO {
                 }
             }
             catch (error) {
+                console.log(error);
                 return { mensaje: error, codigo: 1 };
             }
         });

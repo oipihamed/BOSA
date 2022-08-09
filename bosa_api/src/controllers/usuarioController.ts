@@ -38,6 +38,7 @@ class UsuarioController {
             let respuestaBd = await dao.signUpUser(name, lastName, username, email, password, street, district, state, city, zipcode, phone);
 
             if (respuestaBd.codigo == 0) {
+                
                 return res.json({ message: respuestaBd.mensaje, code: respuestaBd.codigo });
             } else {
                 return res.status(500).json({ message: respuestaBd.mensaje, code: respuestaBd.codigo });
