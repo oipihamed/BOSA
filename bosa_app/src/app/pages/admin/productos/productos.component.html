@@ -85,7 +85,7 @@
 <ng-template #thenBlock>
     <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".jpg,.png" >
     <div class="col-12" *ngFor="let item of photoSelected; let i = index" [attr.data-index]="i">
-        <img [src]=" item || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+        <img [src]=" item || './../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
     </div>
 </ng-template>
 <ng-template #elseBlock>
@@ -93,19 +93,19 @@
     <ng-template #thenP>
         <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple accept=".png" >
         <div class="col-12" *ngFor="let item of photosBD; let i = index" [attr.data-index]="i">
-            <img [src]=" '../../../../'+item.rutaImagen || '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+            <img [src]=" './../'+item.rutaImagen || './../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
         </div>
     </ng-template>
     <ng-template #elseP>
         <div class="col-12" >
             <input type="file" class="file-upload" (change)="onPhotoSelected($event)" #photoInput hidden multiple  accept=".png" >
-            <img [src]="  '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+            <img [src]="  './../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
         </div>
         <div class="col-12" >
-            <img [src]="  '../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+            <img [src]="  './../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
         </div>
         <div class="col-12" >
-            <img [src]="'../../../../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
+            <img [src]="'./../assets/images/SubirArch.webp'" class="imgR" (click)="photoInput.click()">
         </div>
     
     </ng-template>
